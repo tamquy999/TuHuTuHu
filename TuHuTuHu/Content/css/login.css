@@ -1,0 +1,163 @@
+:root {
+    --main-bg-color: #FAFAFB;
+    --sub-bg-color: #F2F2F6;
+    --main-fg-color: #00BDD7;
+    --main-sdw-color: #e7e7e7;
+    --sub-sdw-color: #888888
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    /* font-family: "Quicksand"; */
+    font-family: "Quicksand";
+    font-size: 15px;
+}
+
+body {
+    height: 100vh;
+    background-image: url(/Content/images/green-pink.svg);
+    background-size: 100% 150%;
+    /* background-image: linear-gradient(to top right, teal, cyan); */
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    position: absolute;
+    display: flex;
+    height: 500px;
+    width: 800px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 40px;
+    background-color: white;
+    box-shadow: 10px 10px 100px var(--sub-sdw-color);
+    overflow: hidden;
+    /* padding: 20px; */
+    transition: 300ms ease-out;
+}
+
+.image {
+    opacity: 1;
+    position: absolute;
+    left: 0px;
+    width: 400px;
+    height: 100%;
+    /* background-image: url(/images/people-talking.svg); */
+    background-image: url(/Content/images/Group_of_people.svg);
+    background-size: cover;
+    /* background-position: -80px; */
+    background-repeat: no-repeat;
+    transition: 400ms ease-out;
+    z-index: 1;
+}
+
+.login-container,
+.signup-container {
+    opacity: 1;
+    position: absolute;
+    left: 400px;
+    width: 400px;
+    height: 500px;
+    /* background-color: #000; */
+    transition: 400ms ease-out;
+}
+
+.signup-container {
+    opacity: 1;
+    left: 0;
+    /* z-index: -1; */
+}
+
+.logo {
+    height: 100px;
+    width: 100px;
+    margin-top: 50px;
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-bottom: 20px;
+    transition: 400ms ease-out;
+}
+
+.form {
+    /* background-color: #000; */
+    display: block;
+}
+
+#fullname,
+#user,
+#pass {
+    width: 300px;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: none;
+    outline: none;
+    resize: none;
+    border-radius: 15px;
+    background-color: var(--sub-bg-color);
+    margin-left: 50%;
+    transform: translate(-50%);
+    transition: 400ms ease-out;
+}
+
+#fullname:focus,
+#user:focus,
+#pass:focus {
+    box-shadow: 0px 0px 0px 1px var(--main-fg-color) inset;
+}
+
+#signup,
+#login {
+    cursor: pointer;
+    background-color: var(--main-fg-color);
+    border: none;
+    outline: none;
+    width: 150px;
+    height: 50px;
+    border-radius: 15px;
+    margin-top: 20px;
+    margin-left: 50%;
+    transform: translate(-50%);
+    color: white;
+}
+
+#signup:active,
+#login:active {
+    background-color: #0095a8;
+}
+
+#forgot-pass {
+    margin-left: 145px
+}
+
+.doesnt-have-acc,
+.does-have-acc {
+    display: flex;
+    margin-top: 30px;
+    margin-left: 85px;
+    /* margin-left: 50%;
+    transform: translate(-50%); */
+}
+
+#signup-ask,
+#login-ask {
+    cursor: pointer;
+    color: blue;
+}
+
+@media all and (max-width: 850px) {
+    .image {
+        opacity: 0;
+    }
+    .container {
+        width: 400px;
+    }
+    .form-container {
+        left: 0;
+    }
+}

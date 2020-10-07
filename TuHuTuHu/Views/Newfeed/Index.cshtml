@@ -1,0 +1,382 @@
+﻿
+@using TuHuTuHu.Models;
+@model TuHuTuHu.Models.Account
+
+@{
+    ViewBag.Title = "Index";
+Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.">
+    <title>TuHu</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" href="/Content/css/style.css">
+    <link rel="stylesheet" href="/Content/css/lightbox.css">
+    <!-- <script src="js/slimscroll.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <div class="posts">
+        <div class="onYourMind">
+            <div class="yourmind-textpart">
+                <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
+                <div id="postBtn">Đăng</div>
+            </div>
+            <div class="add-img-container">
+                <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" style="display: none;" />
+                <div class="listimg"></div>
+                <div id="addimg-btn" onclick="triggerFileButton()">
+                </div>
+            </div>
+        </div>
+
+        <div class="post">
+            <div class="post-info">
+                <a href=""><img class="post-avt" src="/Content/images/UserAvt.png"></a>
+                <b><a class="post-name" href="">Đào Anh Tú</a></b>
+                <div class="post-time">2 giờ</div>
+            </div>
+            <div class="post-content">
+                <p class="post-text">
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
+                    'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still
+                    in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </p>
+            </div>
+            <div class="post-images">
+                <a href="/Content/images/post-pic.jpg" data-lightbox="image-1" data-title="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."><img class="post-img" src="/Content/images/post-pic.jpg" alt=""></a>
+            </div>
+            <div class="sep-line"></div>
+            <div class="post-react">
+                <div class="love" onclick="LoveClick()">
+                    <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
+                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">15</span> </p></b>
+                </div>
+                <div class="comment">
+                    <img class="comment-icon" src="/Content/images/comment.svg" alt="">
+                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">20</span> </p></b>
+                </div>
+            </div>
+            <div class="sep-line"></div>
+            <div class="post-comments">
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">Various versions have evolved over the years 😆</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">sometimes by accident, sometimes on purpose (injected humour and the like)</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">Various versions have evolved over the years</p>
+                    </div>
+                </div>
+                <div class="post-cmt-reply">
+                    <img class="post-cmt-avt" src="/Content/images/UserAvt.png" alt="">
+                    <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="post">
+            <div class="post-info">
+                <a href=""><img class="post-avt" src="/Content/images/UserAvt.png"></a>
+                <b><a class="post-name" href="">Đào Anh Tú</a></b>
+                <div class="post-time">2 giờ</div>
+            </div>
+            <div class="post-content">
+                <p class="post-text">
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
+                    'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still
+                    in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </p>
+            </div>
+            <div class="post-images">
+                <a href="/Content/images/post-pic.jpg" data-lightbox="image-1" data-title="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."><img class="post-img" src="/Content/images/post-pic.jpg" alt=""></a>
+            </div>
+            <div class="sep-line"></div>
+            <div class="post-react">
+                <div class="love" onclick="LoveClick()">
+                    <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
+                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">15</span> </p></b>
+                </div>
+                <div class="comment">
+                    <img class="comment-icon" src="/Content/images/comment.svg" alt="">
+                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">20</span> </p></b>
+                </div>
+            </div>
+            <div class="sep-line"></div>
+            <div class="post-comments">
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">Various versions have evolved over the years 😆</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">sometimes by accident, sometimes on purpose (injected humour and the like)</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">Various versions have evolved over the years</p>
+                    </div>
+                </div>
+                <div class="post-cmt-reply">
+                    <img class="post-cmt-avt" src="Content/images/UserAvt.png" alt="">
+                    <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="post">
+            <div class="post-info">
+                <a href=""><img class="post-avt" src="/Content/images/UserAvt.png"></a>
+                <b><a class="post-name" href="">Đào Anh Tú</a></b>
+                <div class="post-time">2 giờ</div>
+            </div>
+            <div class="post-content">
+                <p class="post-text">
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
+                    'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still
+                    in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                </p>
+            </div>
+            <div class="post-images">
+                <a href="/Content/images/post-pic.jpg" data-lightbox="image-1" data-title="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."><img class="post-img" src="/Content/images/post-pic.jpg" alt=""></a>
+            </div>
+            <div class="sep-line"></div>
+            <div class="post-react">
+                <div class="love" onclick="LoveClick()">
+                    <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
+                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">15</span> </p></b>
+                </div>
+                <div class="comment">
+                    <img class="comment-icon" src="/Content/images/comment.svg" alt="">
+                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">20</span> </p></b>
+                </div>
+            </div>
+            <div class="sep-line"></div>
+            <div class="post-comments">
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">Various versions have evolved over the years 😆</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">sometimes by accident, sometimes on purpose (injected humour and the like)</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                    </div>
+                </div>
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
+                        <p class="post-cmt-text">Various versions have evolved over the years</p>
+                    </div>
+                </div>
+                <div class="post-cmt-reply">
+                    <img class="post-cmt-avt" src="Content/images/UserAvt.png" alt="">
+                    <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="sidebar">
+        <div class="userzone">
+            <img id="usrcover" src="/Content/images/usrcover.jpg" alt="usravt">
+            <img src="/Content/images/UserAvt.png" alt="usravt" id="usravt">
+            <p id="username">@Model.Fullname</p>
+            <p id="tagname">@("@" + Model.Username)</p>
+        </div>
+        <div class="sidenav">
+            <a class="anav" href="/index.html">
+                <img class="navimg" src="/Content/images/home.svg" alt="">
+                <p class="navname">Trang chủ</p>
+            </a>
+            <a class="anav" href="/userpage.html">
+                <img class="navimg" src="/Content/images/person.svg" alt="">
+                <p class="navname">Cá nhân</p>
+            </a>
+            <a class="anav" href="/follow.html">
+                <img class="navimg" src="/Content/images/follow.svg" alt="">
+                <p class="navname">Theo dõi</p>
+            </a>
+        </div>
+
+        <form action=@Url.Action("LogoutResult", "Login") method="post">
+            <button type="submit">
+                <div class="logoutbtn">
+                    Đăng xuất
+                </div>
+            </button>
+        </form>
+
+
+    </div>
+
+
+    <div id="contacts">
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+        <div id="contact" onclick="openChat()">
+            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
+            <p class="contactname">Some Name</p>
+        </div>
+    </div>
+
+
+    <div id="contact-bubble" onclick="toggleContacts()">
+        <img id="chaticon" src="/Content/images/contacts-w.svg" alt="">
+    </div>
+
+    <div class="chat">
+        <div id="btn-bubble" onclick="openChat()">
+            <img id="chaticon" src="/Content/images/chat.svg" alt="">
+        </div>
+        <!-- <button id="btn-openchat" onclick="openChat()">Open</button> -->
+        <div id="chatbox">
+            <b><div id="chathead" onclick="closeChat()">Nguyễn Văn Kiên</div></b>
+
+            <div id="chatbody">
+                <div class="yourmsg">
+                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
+                    <div class="yourmsg-bg">
+                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+                    </div>
+                </div>
+                <div class="mymsg">
+                    <div class="mymsg-bg">
+                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+                    </div>
+                </div>
+                <div class="yourmsg">
+                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
+                    <div class="yourmsg-bg">
+                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+                    </div>
+                </div>
+                <div class="mymsg">
+                    <div class="mymsg-bg">
+                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+                    </div>
+                </div>
+                <div class="yourmsg">
+                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
+                    <div class="yourmsg-bg">
+                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+                    </div>
+                </div>
+                <div class="mymsg">
+                    <div class="mymsg-bg">
+                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+                    </div>
+                </div>
+            </div>
+            <div class="chat-footer">
+                <form>
+                    <textarea name="texting" oninput="auto_grow_chat(this)" placeholder="Nhập tin nhắn..."></textarea>
+                    <img id="sendimg" src="/Content/images/send.svg" alt="">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="topbar">
+        <a href=""><img id="logo" src="/Content/images/Tuhu-Logo.png" alt=""></a>
+        <input name="searchbar" type="search" placeholder="Tìm kiếm...">
+    </div>
+
+    <script src="/Scripts/js/script.js"></script>
+    <script src="/Scripts/js/lightbox.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,276 @@
+/*Define for Follow Page*/
+
+.menuFollow {
+    position: absolute;
+    height: auto;
+    width: 100%;
+    border-radius: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 100px var(--main-sdw-color);
+    background-color: var(--main-bg-color);
+}
+
+.menuFollowTab {
+    background-color: var(--main-bg-color);
+    border-radius: 30px 30px 0 0;
+    position: relative;
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-self: center;
+    justify-content: space-evenly;
+}
+
+.menuFollowTab button {
+    position: relative;
+    height: 50px;
+    display: flex;
+    /* padding: 20px 10px 20px 10px; */
+    width: 45%;
+    line-height: 50px;
+    padding: 0px;
+    justify-content: space-around;
+    background-color: inherit;
+    font-weight: bolder;
+    color: black;
+    outline: none;
+    border-color: transparent;
+}
+
+.menuFollowTab button:hover {
+    background-color: #eaf8ff;
+}
+
+.menuFollowTab button:active {
+    background-color: #eaf8ff;
+    color: var(--main-fg-color);
+}
+
+.menuFollowTab button.active {
+    background-color: #eaf8ff;
+    color: var(--main-fg-color);
+    border-bottom-color: cyan;
+}
+
+.followTabLink {
+    font-weight: 20px;
+}
+
+
+/* .followTabLink.active {} */
+
+.listFollow {
+    position: relative;
+    width: 95%;
+    background-color: var(--main-bg-color);
+    /* background-color: blue; */
+    border-radius: 30px;
+    padding-left: 5%;
+}
+
+.followTabContent {
+    background-color: var(--main-bg-color);
+    position: relative;
+    width: 100%;
+    padding-bottom: 10px;
+    margin-top: 5px;
+    display: none;
+}
+
+#followingList {
+    display: block;
+}
+
+.elementOfFollowList {
+    border-bottom: 1px solid #cccccc;
+    /* padding-bottom: 15px; */
+    height: inherit;
+    width: 95%;
+    justify-self: center;
+    margin-bottom: 0px;
+    display: flex;
+    position: relative;
+    cursor: pointer;
+}
+
+.elementOfFollowList:hover {
+    border-bottom: 1px solid #cccccc;
+    /* padding-bottom: 15px; */
+    height: in;
+    width: 95%;
+    justify-self: center;
+    margin-bottom: 0px;
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    background-color: #eeeeee;
+}
+
+.elementOfFollowList:active {
+    border-bottom: 1px solid #cccccc;
+    /* padding-bottom: 15px; */
+    height: auto;
+    width: 95%;
+    justify-self: center;
+    margin-bottom: 0px;
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    background-color: #d6d6d6;
+}
+
+.avtUserFl {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #000;
+    margin: 10px;
+    object-fit: contain;
+    align-self: flex-start;
+}
+
+.userNameFl {
+    /* margin-top: 15px;
+    margin-left: 15px;
+    flex: 1 1 auto;
+    font-weight: bolder; */
+    position: absolute;
+    left: 80px;
+    top: 12px;
+    /* line-height: 15px; */
+    font-weight: bolder;
+    /* font-size: 18px; */
+    line-height: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.userNameFl:hover {
+    /* margin-top: 15px;
+    margin-left: 15px;
+    flex: 1 1 auto;
+    font-weight: bolder; */
+    position: absolute;
+    left: 80px;
+    top: 12px;
+    line-height: 15px;
+    font-weight: bolder;
+    /* font-size: 18px; */
+    line-height: 20px;
+    text-decoration: underline;
+}
+
+.userIDFl {
+    position: absolute;
+    left: 80px;
+    top: 35px;
+    font-size: 12px;
+    font-weight: lighter;
+    text-decoration: none;
+    color: black;
+}
+
+
+/* .userIntro {
+    position: absolute;
+    height: auto;
+    left: 80px;
+    top: 55px;
+    font-size: 14px;
+    font-weight: lighter;
+    width: 90%;
+    word-wrap: break-word;
+} */
+
+
+/*BtnFollowing dùng cho những người mình đang theo dõi*/
+
+.btnFollowing {
+    position: absolute;
+    background-color: var(--main-fg-color);
+    height: 30px;
+    width: 25%;
+    border-radius: 30px;
+    border: none;
+    top: 10%;
+    left: 70%;
+    color: white;
+    outline: none;
+    font-weight: normal;
+}
+
+.btnFollowing:hover span {
+    display: none;
+}
+
+.btnFollowing:hover:before {
+    content: "Ngừng theo dõi";
+    font-weight: normal;
+}
+
+.btnFollowing:hover {
+    background-color: red;
+}
+
+
+/*btnFollow dành cho những người theo dõi mình, mình chưa theo dõi họ*/
+
+.btnFollow {
+    position: absolute;
+    background-color: var(--main-bg-color);
+    height: 30px;
+    width: 25%;
+    border-radius: 30px;
+    border: 1px solid var(--main-fg-color);
+    top: 10%;
+    left: 70%;
+    color: var(--main-fg-color);
+    outline: none;
+    font-weight: normal;
+}
+
+.btnFollow:hover span {
+    display: none;
+}
+
+.btnFollow:hover:before {
+    content: "Theo dõi lại";
+    font-weight: normal;
+}
+
+.btnFollow:hover {
+    background-color: var(--main-fg-color);
+    color: white;
+}
+
+
+/*BtnFollowed dành cho những người theo dõi mình, mình cũng đã theo dõi lại*/
+
+.btnFollowed {
+    position: absolute;
+    background-color: var(--main-fg-color);
+    height: 30px;
+    width: 25%;
+    border-radius: 30px;
+    border: none;
+    top: 10%;
+    left: 70%;
+    color: white;
+    outline: none;
+    font-weight: normal;
+}
+
+.btnFollowed:hover span {
+    display: none;
+}
+
+.btnFollowed:hover:before {
+    content: "Ngừng theo dõi";
+    font-weight: normal;
+}
+
+.btnFollowed:hover {
+    background-color: red;
+    color: white;
+}

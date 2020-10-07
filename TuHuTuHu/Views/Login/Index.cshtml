@@ -1,0 +1,57 @@
+﻿@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" href="/Content/css/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="image">
+        </div>
+        <div class="login-container">
+            <img class="logo" src="/Content/images/Logo.png" alt="">
+            <form class="form" action=@Url.Action("LoginResult", "Login") method="post">
+                <input type="text" id="user" name="user" placeholder="Tài khoản..." required>
+                <input type="password" id="pass" name="pass" placeholder="Mật khẩu..." required>
+                <input type="submit" id="login" name="login" value="Đăng nhập">
+            </form>
+            <div class="doesnt-have-acc">
+                <p>Bạn chưa có tài khoản?</p>
+                <p>&nbsp</p>
+                <div id="signup-ask" onclick="SignupClick()">Đăng ký</div>
+            </div>
+            <a id="forgot-pass" href="">Quên mật khẩu?</a>
+        </div>
+        <div class="signup-container">
+            <img class="logo" src="/Content/images/Logo.png" alt="">
+            <form class="form" action="">
+                <input type="text" id="fullname" name="fullname" placeholder="Họ và tên..." required>
+                <input type="text" id="user" name="user" placeholder="Tài khoản..." required>
+                <input type="password" id="pass" name="pass" placeholder="Mật khẩu..." required>
+                <input type="submit" id="signup" name="signup" value="Đăng kí">
+            </form>
+            <div class="does-have-acc">
+                <p>Bạn đã có tài khoản?</p>
+                <p>&nbsp</p>
+                <div id="login-ask" onclick="LoginClick()">Đăng nhập</div>
+            </div>
+            <a id="forgot-pass" href="">Quên mật khẩu?</a>
+        </div>
+    </div>
+
+
+    <script src="/Scripts/js/login.js"></script>
+
+</body>
+
+</html>
