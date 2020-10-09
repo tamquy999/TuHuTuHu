@@ -65,7 +65,7 @@ function toggleContacts() {
     }
 }
 
-$(window).resize(function() {
+$(window).resize(function () {
     // if ($(window).width() > 900) {
     if (window.matchMedia('(max-width: 900px)').matches) {
         $('#contacts').css('width', '0px');
@@ -82,25 +82,40 @@ function triggerFileButton() {
     $('#file-input').trigger('click');
 }
 
+// Click logout div button to trigger logout input button
+function triggerLogoutButton() {
+    $('#logout-btn').trigger('click');
+}
+
+// Click Post div button to trigger Post input button
+function triggerPostButton() {
+    $('#post-btn').trigger('click');
+}
+
+
+// Load image
+
 var imageList = [];
 var index = 0;
-
-var loadImage = function(event) {
+var loadImage = function (event) {
     imageList.push(event.target.files[0]);
 
-    // document.getElementById('addimg-btn').insertBefore = '<img class="output">';
     $('.listimg').append('<div class="output" id="output' + index + '"></div>');
-    // $('.output').attr('src', URL.createObjectURL(imageList[0]));
 
     $('#output' + index).css('background-image', 'url(' + URL.createObjectURL(imageList[index]) + ')');
     $('#output' + index).css('display', 'block');
     index++;
-    // var addimg = document.getElementById('addimg');
-    // addimg.style.display = "none";
-    // addimg.style.display = "block";
 };
 
 // Click love button
-function LoveClick() {
-    $('.love-icon').attr('src', '/Content/images/heart.svg');
+function LoveClick(Love_PostID) {
+    if ($('#' + Love_PostID).attr('src') == '/Content/images/heart_line.svg') {
+        $('#' + Love_PostID).attr('src', '/Content/images/heart.svg');
+    }
+    else $('#' + Love_PostID).attr('src', '/Content/images/heart_line.svg');
+}
+
+// Click comment button
+function CommentIcon_Click(Comment_PostID) {
+    $('#' + Comment_PostID).focus();
 }

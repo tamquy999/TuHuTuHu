@@ -235,6 +235,7 @@ input[name="searchbar"] {
 }
 
 .logoutbtn {
+    cursor: pointer;
     position: absolute;
     bottom: 20px;
     left: 70px;
@@ -252,10 +253,10 @@ input[name="searchbar"] {
     transition: 300ms ease-out;
 }
 
-#logoutimg {
+/*#logoutimg {
     height: 15px;
     margin: 17px 10px 30px 50px;
-}
+}*/
 
 .logoutbtn:hover {
     box-shadow: 5px 5px 20px #e2e2e2;
