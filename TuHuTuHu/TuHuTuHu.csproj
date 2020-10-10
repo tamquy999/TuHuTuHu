@@ -130,6 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NewfeedController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -139,6 +140,7 @@
     <Compile Include="Models\MyDBContext.cs" />
     <Compile Include="Models\Newfeed.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\ResultSearch.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,6 +148,7 @@
     <Content Include="Content\css\follow.css" />
     <Content Include="Content\css\lightbox.css" />
     <Content Include="Content\css\login.css" />
+    <Content Include="Content\css\search.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\userpage.css" />
     <Content Include="Content\css\_notificationBar.css" />
@@ -191,6 +194,7 @@
     <Content Include="Scripts\js\lightbox.js" />
     <Content Include="Scripts\js\login.js" />
     <Content Include="Scripts\js\script.js" />
+    <Content Include="Scripts\js\search.js" />
     <Content Include="Scripts\js\slimscroll.js" />
     <Content Include="Scripts\js\userpage.js" />
     <Content Include="Web.config" />
@@ -218,6 +222,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
     <Content Include="Views\Newfeed\UploadFile.cshtml" />
+    <Content Include="Views\Search\Search.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
