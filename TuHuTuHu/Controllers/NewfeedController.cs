@@ -11,22 +11,63 @@ namespace TuHuTuHu.Controllers
     public class NewfeedController : Controller
     {
 
-        MyDBContext dbContext = new MyDBContext();
-        Account acc;
-        List<Post> posts;
+        MyDBContext dbContext = new MyDBContext();        
+
+        int postPerClick = 2;
+
 
         // GET: Newfeed
         public ActionResult Index()
         {
-            acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
+            Session["postCount"] = 0;
 
-            posts = dbContext.Post.ToList();
+            var acc = GetAccount();
+
+            var posts = GetAllRelatePosts();
+
+            #region Get all contacts
+            List<Msg> messages = dbContext.Msg.Where(s => s.Account.AccID == acc.AccID || s.Account1.AccID == acc.AccID).ToList();
+            List<string> contactIDs = new List<string>();
+            foreach (var message in messages)
+            {
+                // Neu minh la nguoi gui thi lay id nguoi nhan va nguoc lai
+                if (message.Account.AccID == acc.AccID)
+                {
+                    contactIDs.Add(message.Account1.AccID.ToString());
+                }
+                else contactIDs.Add(message.Account.AccID.ToString());
+            }
+            List<Account> contacts = dbContext.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
+            ViewBag.Contacts = contacts;
+            #endregion
 
             Newfeed newfeed = new Newfeed();
             newfeed.account = acc;
             newfeed.allPosts = posts;
 
+            ViewBag.Account = acc;
+            ViewBag.Posts = posts;
+
             return View(newfeed);
+        }
+
+        Account GetAccount()
+        {
+            Account acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
+            return acc;
+        }
+
+        List<Post> GetAllRelatePosts()
+        {
+            var acc = GetAccount();
+            List<Follow> followers = dbContext.Follow.Where(s => s.FollowerID == acc.AccID).ToList();
+            List<string> followerIDs = new List<string>();
+            foreach (var follower in followers)
+            {
+                followerIDs.Add(follower.UserID.ToString());
+            }
+            List<Post> posts = dbContext.Post.Where(s => followerIDs.Contains(s.UserID.ToString()) || s.UserID == acc.AccID).ToList();
+            return posts;
         }
 
         [HttpGet]
@@ -54,6 +95,24 @@ namespace TuHuTuHu.Controllers
                 ViewBag.Message = "You have not specified a file.";
             }
             return View();
+        }
+
+        public PartialViewResult GetPostData()
+        {
+            System.Threading.Thread.Sleep(2000);
+            var posts = GetAllRelatePosts();
+            int postCount = Convert.ToInt32(Session["postCount"]);
+            IEnumerable<Post> result;
+            if (postCount < posts.Count())
+            {
+                result = posts.Skip(postCount).Take(postPerClick);
+                postCount += postPerClick;
+                Session["postCount"] = postCount;
+            }
+            else result = null;
+            Newfeed nf = new Newfeed();
+            nf.allPosts = result.ToList();
+            return PartialView("_Post", nf);
         }
     }
 }

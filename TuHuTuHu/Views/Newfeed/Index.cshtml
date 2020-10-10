@@ -3,7 +3,6 @@
 
 @model TuHuTuHu.Models.Newfeed
 
-
 <div class="posts">
     <div class="onYourMind">
         <div class="yourmind-textpart">
@@ -28,200 +27,50 @@
         </div>
     </div>
 
-    @{
-        foreach (Post post in Model.allPosts)
-        {
-            <div class="post">
-                <div class="post-info">
-                    <a href=""><img class="post-avt" src=@post.Account.AvtLink></a>
-                    <b><a class="post-name" href="">@post.Account.Fullname</a></b>
-                    <div class="post-time">@post.CreatedAt.ToString()</div>
-                </div>
-                <div class="post-content">
-                    <p class="post-text">@post.Content</p>
-                </div>
-                <div class="post-images">
-                    <a href=@post.ImgLink data-lightbox="image-1" data-title=@post.Content><img class="post-img" src=@post.ImgLink alt=""></a>
-                </div>
-                <div class="sep-line"></div>
-                <div class="post-react">
-                    <div class="love" onclick="LoveClick('@("love_" + post.PostID)')">
-                        <img class="love-icon" id=@("love_" + post.PostID) src="/Content/images/heart_line.svg" alt="">
-                        <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">@post.Account1.Count()</span> </p></b>
-                    </div>
-                    <div class="comment" onclick="CommentIcon_Click('@("comment_reply_" + post.PostID)')">
-                        <img class="comment-icon" id=@("comment_" + post.PostID) src="/Content/images/comment.svg" alt="">
-                        <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">@post.Comment.Count()</span> </p></b>
-                    </div>
-                </div>
-                <div class="sep-line"></div>
-                <div class="post-comments">
-                    <div class="post-cmt">
-                        <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                        <div class="post-cmt-content">
-                            <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                            <p class="post-cmt-text">Various versions have evolved over the years 😆</p>
-                        </div>
-                    </div>
-                    <div class="post-cmt">
-                        <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                        <div class="post-cmt-content">
-                            <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                            <p class="post-cmt-text">sometimes by accident, sometimes on purpose (injected humour and the like)</p>
-                        </div>
-                    </div>
-                    <div class="post-cmt">
-                        <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                        <div class="post-cmt-content">
-                            <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                            <p class="post-cmt-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-                        </div>
-                    </div>
-                    <div class="post-cmt">
-                        <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                        <div class="post-cmt-content">
-                            <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                            <p class="post-cmt-text">Various versions have evolved over the years</p>
-                        </div>
-                    </div>
-                    <div class="post-cmt-reply">
-                        <img class="post-cmt-avt" src="/Content/images/UserAvt.png" alt="">
-                        <textarea id=@("comment_reply_" + post.PostID) name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
-                    </div>
-                </div>
-            </div>
-
-        }
-    }
-
-
-
-    @*<div class="post">
+    @foreach (Post post in Model.allPosts)
+    {
+        <div class="post">
             <div class="post-info">
-                <a href=""><img class="post-avt" src="/Content/images/UserAvt.png"></a>
-                <b><a class="post-name" href="">Đào Anh Tú</a></b>
-                <div class="post-time">2 giờ</div>
+                <a href=""><img class="post-avt" src=@post.Account.AvtLink></a>
+                <b><a class="post-name" href="">@post.Account.Fullname</a></b>
+                <div class="post-time">@post.CreatedAt.ToString()</div>
             </div>
             <div class="post-content">
-                <p class="post-text">
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
-                    'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                    in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                </p>
+                <p class="post-text">@post.Content</p>
             </div>
             <div class="post-images">
-                <a href="/Content/images/post-pic.jpg" data-lightbox="image-1" data-title="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."><img class="post-img" src="/Content/images/post-pic.jpg" alt=""></a>
+                <a href=@post.ImgLink data-lightbox="image-1" data-title=@post.Content><img class="post-img" src=@post.ImgLink alt=""></a>
             </div>
             <div class="sep-line"></div>
             <div class="post-react">
-                <div class="love" onclick="LoveClick()">
-                    <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
-                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">15</span> </p></b>
+                <div class="love" onclick="LoveClick('@("love_" + post.PostID)')">
+                    <img class="love-icon" id=@("love_" + post.PostID) src="/Content/images/heart_line.svg" alt="">
+                    <p class="love-text" style="font-weight: 800">Thích <span style="font-weight: 200; font-size: 13px;">@post.Love.Count()</span> </p>
                 </div>
-                <div class="comment">
-                    <img class="comment-icon" src="/Content/images/comment.svg" alt="">
-                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">20</span> </p></b>
+                <div class="comment" onclick="CommentIcon_Click('@("comment_reply_" + post.PostID)')">
+                    <img class="comment-icon" id=@("comment_" + post.PostID) src="/Content/images/comment.svg" alt="">
+                    <p class="comment-text" style="font-weight: 800">Bình Luận <span style="font-weight: 200; font-size: 13px;">@post.Comment.Count()</span> </p>
                 </div>
             </div>
             <div class="sep-line"></div>
             <div class="post-comments">
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">Various versions have evolved over the years 😆</p>
+                @foreach (var comment in post.Comment)
+                {
+                    <div class="post-cmt">
+                        <a href=""><img class="post-cmt-avt" src=@comment.Account.AvtLink></a>
+                        <div class="post-cmt-content">
+                            <b><a class="post-cmt-name" href="">@comment.Account.Fullname</a></b>
+                            <p class="post-cmt-text">@comment.Content</p>
+                        </div>
                     </div>
-                </div>
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">sometimes by accident, sometimes on purpose (injected humour and the like)</p>
-                    </div>
-                </div>
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-                    </div>
-                </div>
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">Various versions have evolved over the years</p>
-                    </div>
-                </div>
+                }
+
                 <div class="post-cmt-reply">
-                    <img class="post-cmt-avt" src="Content/images/UserAvt.png" alt="">
-                    <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
+                    <img class="post-cmt-avt" src=@ViewBag.Account.AvtLink alt="">
+                    <textarea id=@("comment_reply_" + post.PostID) name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
                 </div>
             </div>
         </div>
-        <div class="post">
-            <div class="post-info">
-                <a href=""><img class="post-avt" src="/Content/images/UserAvt.png"></a>
-                <b><a class="post-name" href="">Đào Anh Tú</a></b>
-                <div class="post-time">2 giờ</div>
-            </div>
-            <div class="post-content">
-                <p class="post-text">
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using
-                    'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                    in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                </p>
-            </div>
-            <div class="post-images">
-                <a href="/Content/images/post-pic.jpg" data-lightbox="image-1" data-title="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."><img class="post-img" src="/Content/images/post-pic.jpg" alt=""></a>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-react">
-                <div class="love" onclick="LoveClick()">
-                    <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
-                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">15</span> </p></b>
-                </div>
-                <div class="comment">
-                    <img class="comment-icon" src="/Content/images/comment.svg" alt="">
-                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">20</span> </p></b>
-                </div>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-comments">
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">Various versions have evolved over the years 😆</p>
-                    </div>
-                </div>
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">sometimes by accident, sometimes on purpose (injected humour and the like)</p>
-                    </div>
-                </div>
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
-                    </div>
-                </div>
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">Various versions have evolved over the years</p>
-                    </div>
-                </div>
-                <div class="post-cmt-reply">
-                    <img class="post-cmt-avt" src="Content/images/UserAvt.png" alt="">
-                    <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
-                </div>
-            </div>
-        </div>*@
 
-
+    }
 </div>

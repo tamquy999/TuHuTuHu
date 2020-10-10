@@ -30,7 +30,7 @@
             <p id="tagname">@("@" + Model.account.Username)</p>
         </div>
         <div class="sidenav">
-            <a class="anav" href="/index.html">
+            <a class="anav" href=@Url.Action("Index", "Newfeed")>
                 <img class="navimg" src="/Content/images/home.svg" alt="">
                 <p class="navname">Trang chủ</p>
             </a>
@@ -53,50 +53,14 @@
 
 
     <div id="contacts">
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
+        @foreach (var contact in ViewBag.Contacts)
+        {
+            <div id="contact" onclick="openChat()">
+                <img src=@contact.AvtLink alt="" class="contactavt">
+                <p class="contactname">@contact.Fullname</p>
+            </div>
+        }
+
     </div>
 
 

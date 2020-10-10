@@ -135,11 +135,12 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Follow.cs" />
+    <Compile Include="Models\Love.cs" />
     <Compile Include="Models\Msg.cs" />
     <Compile Include="Models\MyDBContext.cs" />
     <Compile Include="Models\Newfeed.cs" />
     <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,5 +9,7 @@ namespace TuHuTuHu.Models
     {
         public Account account { get; set; }
         public List<Post> allPosts { get; set; }
+
+        
     }
 }

@@ -13,7 +13,7 @@ namespace TuHuTuHu.Models
         public Post()
         {
             Comment = new HashSet<Comment>();
-            Account1 = new HashSet<Account>();
+            Love = new HashSet<Love>();
         }
 
         public int PostID { get; set; }
@@ -33,6 +33,6 @@ namespace TuHuTuHu.Models
         public virtual ICollection<Comment> Comment { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Account1 { get; set; }
+        public virtual ICollection<Love> Love { get; set; }
     }
 }

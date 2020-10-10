@@ -8,15 +8,16 @@ namespace TuHuTuHu.Models
     public partial class MyDBContext : DbContext
     {
         public MyDBContext()
-            : base("name=MyDBContext")
+            : base("name=MyDBContext1")
         {
         }
 
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<Follow> Follow { get; set; }
+        public virtual DbSet<Love> Love { get; set; }
         public virtual DbSet<Msg> Msg { get; set; }
         public virtual DbSet<Post> Post { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -47,6 +48,24 @@ namespace TuHuTuHu.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Account>()
+                .HasMany(e => e.Follow)
+                .WithRequired(e => e.Account)
+                .HasForeignKey(e => e.FollowerID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Account>()
+                .HasMany(e => e.Follow1)
+                .WithRequired(e => e.Account1)
+                .HasForeignKey(e => e.UserID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Account>()
+                .HasMany(e => e.Love)
+                .WithRequired(e => e.Account)
+                .HasForeignKey(e => e.UserID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Account>()
                 .HasMany(e => e.Msg)
                 .WithRequired(e => e.Account)
                 .HasForeignKey(e => e.ReceiverID)
@@ -64,11 +83,6 @@ namespace TuHuTuHu.Models
                 .HasForeignKey(e => e.UserID)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Account>()
-                .HasMany(e => e.Account1)
-                .WithMany(e => e.Account2)
-                .Map(m => m.ToTable("Follow").MapLeftKey("FollowerID").MapRightKey("UserID"));
-
             modelBuilder.Entity<Post>()
                 .Property(e => e.ImgLink)
                 .IsFixedLength()
@@ -80,9 +94,9 @@ namespace TuHuTuHu.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Post>()
-                .HasMany(e => e.Account1)
-                .WithMany(e => e.Post1)
-                .Map(m => m.ToTable("Love").MapLeftKey("PostID").MapRightKey("UserID"));
+                .HasMany(e => e.Love)
+                .WithRequired(e => e.Post)
+                .WillCascadeOnDelete(false);
         }
     }
 }
