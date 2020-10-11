@@ -13,17 +13,18 @@ namespace TuHuTuHu.Models
         public Account()
         {
             Comment = new HashSet<Comment>();
+            Follow = new HashSet<Follow>();
+            Follow1 = new HashSet<Follow>();
+            Love = new HashSet<Love>();
             Msg = new HashSet<Msg>();
             Msg1 = new HashSet<Msg>();
             Post = new HashSet<Post>();
-            Account1 = new HashSet<Account>();
-            Account2 = new HashSet<Account>();
-            Post1 = new HashSet<Post>();
         }
 
         [Key]
         public int AccID { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string Username { get; set; }
 
@@ -46,6 +47,15 @@ namespace TuHuTuHu.Models
         public virtual ICollection<Comment> Comment { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Follow> Follow { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Follow> Follow1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Love> Love { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Msg> Msg { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,14 +63,5 @@ namespace TuHuTuHu.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Post { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Account1 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Account2 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Post> Post1 { get; set; }
     }
 }
