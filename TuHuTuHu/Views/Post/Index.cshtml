@@ -173,32 +173,36 @@
                 </p>
             </div>
             <div class="post-images">
-                <a href=@Model.thisPost.ImgLink data-lightbox="image-1" data-title=@Model.thisPost.Content ><img class="post-img" src=@Model.thisPost.ImgLink alt=""></a>
+                <a href=@Model.thisPost.ImgLink data-lightbox="image-1" data-title=@Model.thisPost.Content><img class="post-img" src=@Model.thisPost.ImgLink alt=""></a>
             </div>
             <div class="sep-line"></div>
             <div class="post-react">
                 <div class="love" onclick="LoveClick()">
                     <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
-                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">15</span> </p></b>
+                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">20</span> </p></b>
                 </div>
                 <div class="comment">
                     <img class="comment-icon" src="/Content/images/comment.svg" alt="">
-                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">20</span> </p></b>
+                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">@Model.thisPost.Comment.Count()</span> </p></b>
                 </div>
             </div>
             <div class="sep-line"></div>
             <div class="post-comments">
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src="/Content/images/UserAvt.png"></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">Đào Anh Tú</a></b>
-                        <p class="post-cmt-text">Various versions have evolved over the years</p>
+                @foreach (var item in Model.allComments)
+                {
+                    <div class="post-cmt">
+                        <a href=""><img class="post-cmt-avt" src=@Model.GetAccountByUserID(item.UserID.ToString()).AvtLink></a>
+                        <div class="post-cmt-content">
+                            <b><a class="post-cmt-name" href="">@Model.GetAccountByUserID(item.UserID.ToString()).Fullname</a></b>
+                            <p class="post-cmt-text">@item.Content</p>
+                        </div>
                     </div>
-                </div>
+                }
                 <div class="post-cmt-reply">
                     <img class="post-cmt-avt" src="/Content/images/UserAvt.png" alt="">
                     <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
                 </div>
+
             </div>
         </div>
     </div>

@@ -17,26 +17,34 @@ namespace TuHuTuHu.Controllers
 
         UserPost userPost = new UserPost();
         // GET: Post
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID">userID của người chủ post</param>
+        /// <param name="postID">postID của bài viết cần xem</param>
+        /// <returns></returns>
         public ActionResult Index(string userID, string postID)
         {
             myAcc = db.Account.Find(Convert.ToInt32(Session["userID"]));
             
             if (postID != "" && postID != null && userID != "" && userID != null)
             {
-                ownerPost = db.Account.Find(userID);
-                thisPost = db.Post.Find(postID);
-                allComments = db.Comment.ToList();
+                ownerPost = db.Account.Find(Convert.ToInt32(userID));
+                thisPost = db.Post.Find(Convert.ToInt32(postID));
+                allComments = userPost.GetAllCommentPerPost(db, postID);
 
                 userPost.myAcc = this.myAcc;
                 userPost.ownerPost = this.ownerPost;
                 userPost.thisPost = this.thisPost;
+                userPost.allComments = this.allComments;
 
+                return View(userPost);
             }
             else
             {
-                return View("Error");
+                return null;
             }
-            return View(userPost);
+            
         }
     }
 }
