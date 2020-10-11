@@ -1,0 +1,7 @@
+﻿.postMainFrame {
+    position: absolute;
+    left: 50%;
+    width: 660px;
+    transform: translate(-50%);
+    transition: 300ms ease-out;
+}

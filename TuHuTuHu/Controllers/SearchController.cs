@@ -19,14 +19,15 @@ namespace TuHuTuHu.Controllers
         {
             acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
 
-            
             if (searchString == null)
             {
                 return null;
             }
             else
             {
-                resultAccounts = dbContext.Account.Where(x => x.Username.Contains(searchString)).ToList();
+                resultAccounts = dbContext.Account.Where(x => x.Username.StartsWith(searchString)).ToList();
+
+                resultAccounts = resultAccounts.Union(dbContext.Account.Where(x => x.Fullname.Contains(searchString)).ToList()).ToList();
 
                 ResultSearch result = new ResultSearch();
                 result.account = acc;
@@ -34,5 +35,8 @@ namespace TuHuTuHu.Controllers
                 return View(result);
             }
         }
+
+
+
     }
 }
