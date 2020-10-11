@@ -37,6 +37,11 @@ namespace TuHuTuHu.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult SearchResult(string searchbar)
+        {
+            return RedirectToAction("Index", new { searchString = searchbar});
+        }
 
     }
 }
