@@ -144,7 +144,6 @@
     <Compile Include="Models\Newfeed.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\ResultSearch.cs" />
-    <Compile Include="Models\UserPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -208,8 +208,11 @@
     <!-- #endregion -->
     <!-- #region SearchBox -->
     <div class="topbar">
-        <a href=""><img id="logo" src="/Content/images/Tuhu-Logo.png" alt=""></a>
-        <input name="searchbar" type="search" placeholder="Tìm kiếm...">
+        <img id="logo" src="/Content/images/Tuhu-Logo.png" alt="">
+        <form class="form" action=@Url.Action("SearchResult", "Search") method="post">
+            <input name="searchbar" type="search" placeholder="Tìm kiếm...">
+            @*<button id="searchBtn" type="submit" style="display: none">Tìm</button>*@
+        </form>
     </div>
     <script src="js/script.js"></script>
     <script src="js/lightbox.js"></script>
