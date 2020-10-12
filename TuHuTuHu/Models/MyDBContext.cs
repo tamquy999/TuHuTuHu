@@ -8,7 +8,7 @@ namespace TuHuTuHu.Models
     public partial class MyDBContext : DbContext
     {
         public MyDBContext()
-            : base("name=MyDBContext1")
+            : base("name=MyDBContext")
         {
         }
 
