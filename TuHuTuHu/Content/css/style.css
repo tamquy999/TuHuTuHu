@@ -16,6 +16,7 @@
 
 a {
     text-decoration: none;
+    color: black;
 }
 
 a:visited {
@@ -279,6 +280,7 @@ input[name="searchbar"] {
     /* position: absolute;
     top: 20px;
     left: calc(50% - 330px); */
+    top: 20px;
     position: absolute;
     left: 50%;
     width: 660px;
@@ -296,8 +298,6 @@ input[name="searchbar"] {
     border-radius: 30px;
     box-shadow: 10px 10px 100px var(--main-sdw-color);
     margin-bottom: 30px;
-    margin-top: 20px;
-    padding-bottom: 20px;
 }
 
 .yourmind-textpart {
@@ -389,7 +389,7 @@ textarea[name="yourMind"] {
     background-color: var(--main-bg-color);
     border-radius: 30px;
     box-shadow: 10px 10px 100px var(--main-sdw-color);
-    margin-bottom: 30px;
+    margin-top: 30px;
     padding: 20px 20px 20px 20px;
 }
 

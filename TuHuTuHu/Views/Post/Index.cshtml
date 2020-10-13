@@ -1,226 +1,51 @@
 ﻿
-@{
-    Layout = null;
-}
 
 @model TuHuTuHu.Models.Post
 
-<!DOCTYPE html>
-<html lang="en">
+<div class="posts">
+    <div class="post">
+        <div class="post-info">
+            <a href=""><img class="post-avt" src=@Model.Account.AvtLink></a>
+            <b><a class="post-name" href="">@Model.Account.Fullname</a></b>
+            <div class="post-time">@Model.CreatedAt</div>
+        </div>
+        <div class="post-content">
+            <p class="post-text">
+                @Model.Content
+            </p>
+        </div>
+        <div class="post-images">
+            <a href=@Model.ImgLink data-lightbox="image-1" data-title=@Model.Content><img class="post-img" src=@Model.ImgLink alt=""></a>
+        </div>
+        <div class="sep-line"></div>
+        <div class="post-react">
+            <div class="love" onclick="LoveClick()">
+                <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
+                <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">@Model.Love.Count()</span> </p></b>
+            </div>
+            <div class="comment">
+                <img class="comment-icon" src="/Content/images/comment.svg" alt="">
+                <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">@Model.Comment.Count()</span> </p></b>
+            </div>
+        </div>
+        <div class="sep-line"></div>
+        <div class="post-comments">
+            @foreach (var item in Model.Comment)
+            {
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src=@item.Account.AvtLink></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="">@item.Account.Fullname</a></b>
+                        <p class="post-cmt-text">@item.Content</p>
+                    </div>
+                </div>
+            }
+            <div class="post-cmt-reply">
+                <img class="post-cmt-avt" src=@ViewBag.CurrentUser.AvtLink alt="">
+                <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
+            </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post</title>
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/Scripts/js/slimscroll.js"></script>
-    <script src="/Scripts/js/script.js"></script>
-    <script src="/Scripts/js/slimscroll.js"></script>
-    <script src="/Scripts/js/script.js"></script>
-    <script src="/Scripts/js/lightbox.js"></script>
-    <script src="/Scripts/js/post.js"></script>
-    <link rel="stylesheet" href="/Content/css/style.css">
-    <link rel="stylesheet" href="/Content/css/lightbox.css">
-    <link rel="stylesheet" href="/Content/css/post.css">
-</head>
-
-<body>
-    <!--#region Chat and Contacts-->
-    <!----------------Contact and chat in here----------------------->
-    <div id="contacts">
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-        <div id="contact" onclick="openChat()">
-            <img src="/Content/images/UserAvt.png" alt="" class="contactavt">
-            <p class="contactname">Some Name</p>
-        </div>
-    </div>
-    <div class="chat">
-        <div id="btn-bubble" onclick="openChat()">
-            <img id="chaticon" src="/Content/images/chat.svg" alt="">
-        </div>
-        <!-- <button id="btn-openchat" onclick="openChat()">Open</button> -->
-        <div id="chatbox">
-            <b><div id="chathead" onclick="closeChat()">Nguyễn Văn Kiên</div></b>
-
-            <div id="chatbody">
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-            </div>
-            <div class="chat-footer">
-                <form>
-                    <textarea name="texting" oninput="auto_grow_chat(this)" placeholder="Nhập tin nhắn..."></textarea>
-                    <img id="sendimg" src="/Content/images/send.svg" alt="">
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--#endregion-->
-    <!--#region navbar-->
-    <div class="sidebar">
-        <div class="userzone">
-            <img src="/Content/images/usrcover.jpg" alt="usrcover" id="usrcover">
-            <img src="/Content/images/UserAvt.png" alt="usravt" id="usravt">
-            <p id="username">Nguyễn Ngọc Hưng</p>
-            <p id="tagname">tamquy999</p>
-        </div>
-        <div class="sidenav">
-            <a class="anav" href="\index.html">
-                <img class="navimg" src="/Content/images/home.svg" alt="">
-                <p class="navname">Trang chủ</p>
-            </a>
-            <a class="anav" href="/userpage.html">
-                <img class="navimg" src="/Content/images/person.svg" alt="">
-                <p class="navname">Cá nhân</p>
-            </a>
-            <a class="anav" href="/follow.html">
-                <img class="navimg" src="/Content/images/follow.svg" alt="">
-                <p class="navname">Theo dõi</p>
-            </a>
-        </div>
-        <!-- <div class="logoutbtn">
-            <p id="logoutbtnText">Đăng xuất</p>
-        </div> -->
-        <div class="logoutbtn">
-            Đăng xuất
-            <!-- <img id="logoutimg" src="/Content/images/logout.svg" alt="">
-            <p id="logouttext">Đăng xuất</p> -->
-        </div>
-    </div>
-    <!--#endregion-->
-    <!-- #region Post main frame -->
-    <div class="postMainFrame">
-        <div class="post">
-            <div class="post-info">
-                <a href=""><img class="post-avt" src=@Model.Account.AvtLink></a>
-                <b><a class="post-name" href="">@Model.Account.Fullname</a></b>
-                <div class="post-time">@Model.CreatedAt</div>
-            </div>
-            <div class="post-content">
-                <p class="post-text">
-                    @Model.Content
-                </p>
-            </div>
-            <div class="post-images">
-                <a href=@Model.ImgLink data-lightbox="image-1" data-title=@Model.Content><img class="post-img" src=@Model.ImgLink alt=""></a>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-react">
-                <div class="love" onclick="LoveClick()">
-                    <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
-                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">@Model.Love.Count()</span> </p></b>
-                </div>
-                <div class="comment">
-                    <img class="comment-icon" src="/Content/images/comment.svg" alt="">
-                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">@Model.Comment.Count()</span> </p></b>
-                </div>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-comments">
-                @foreach (var item in Model.Comment)
-                {
-                    <div class="post-cmt">
-                        <a href=""><img class="post-cmt-avt" src=@item.Account.AvtLink></a>
-                        <div class="post-cmt-content">
-                            <b><a class="post-cmt-name" href="">@item.Account.Fullname</a></b>
-                            <p class="post-cmt-text">@item.Content</p>
-                        </div>
-                    </div>
-                }
-                <div class="post-cmt-reply">
-                    <img class="post-cmt-avt" src="/Content/images/UserAvt.png" alt="">
-                    <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
-                </div>
-
-            </div>
         </div>
     </div>
 
-
-    <!-- #endregion -->
-    <!-- #region SearchBox -->
-    <div class="topbar">
-        <img id="logo" src="/Content/images/Tuhu-Logo.png" alt="">
-        <form class="form" action=@Url.Action("SearchResult", "Search") method="post">
-            <input name="searchbar" type="search" placeholder="Tìm kiếm...">
-            @*<button id="searchBtn" type="submit" style="display: none">Tìm</button>*@
-        </form>
-    </div>
-    <script src="/Scripts/js/script.js"></script>
-    <script src="/Scripts/js/lightbox.js"></script>
-    <!-- #endregion -->
-
-</body>
-
-</html>
+</div>

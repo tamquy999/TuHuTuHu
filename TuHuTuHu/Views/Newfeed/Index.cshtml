@@ -1,7 +1,7 @@
 ﻿
 @using TuHuTuHu.Models;
 
-@model TuHuTuHu.Models.Newfeed
+@model List<TuHuTuHu.Models.Post>
 
 <div class="posts">
     <div class="onYourMind">
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    @foreach (Post post in Model.allPosts)
+    @foreach (Post post in Model)
     {
         <div class="post">
             <div class="post-info">
@@ -68,7 +68,7 @@
                 }
 
                 <div class="post-cmt-reply">
-                    <img class="post-cmt-avt" src=@ViewBag.Account.AvtLink alt="">
+                    <img class="post-cmt-avt" src=@ViewBag.CurrentUser.AvtLink alt="">
                     <textarea id=@("comment_reply_" + post.PostID) name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
                 </div>
             </div>

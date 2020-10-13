@@ -11,8 +11,8 @@ namespace TuHuTuHu.Controllers
     public class NewfeedController : Controller
     {
 
-        MyDBContext dbContext = new MyDBContext();        
-
+        MyDBContext dbContext = new MyDBContext();
+        Account acc = new Account();
         int postPerClick = 2;
 
 
@@ -21,11 +21,34 @@ namespace TuHuTuHu.Controllers
         {
             Session["postCount"] = 0;
 
-            var acc = GetAccount();
+            acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
 
             var posts = GetAllRelatePosts();
 
-            #region Get all contacts
+            ViewBag.CurrentUser = acc;
+            ViewBag.Contacts = GetAllContact();
+
+            Newfeed newfeed = new Newfeed();
+            newfeed.account = acc;
+            newfeed.allPosts = posts;
+
+            return View(posts);
+        }
+
+        List<Post> GetAllRelatePosts()
+        {
+            List<Follow> followers = dbContext.Follow.Where(s => s.FollowerID == acc.AccID).ToList();
+            List<string> followerIDs = new List<string>();
+            foreach (var follower in followers)
+            {
+                followerIDs.Add(follower.UserID.ToString());
+            }
+            List<Post> posts = dbContext.Post.Where(s => followerIDs.Contains(s.UserID.ToString()) || s.UserID == acc.AccID).ToList();
+            return posts;
+        }
+
+        List<Account> GetAllContact()
+        {
             List<Msg> messages = dbContext.Msg.Where(s => s.Account.AccID == acc.AccID || s.Account1.AccID == acc.AccID).ToList();
             List<string> contactIDs = new List<string>();
             foreach (var message in messages)
@@ -38,36 +61,7 @@ namespace TuHuTuHu.Controllers
                 else contactIDs.Add(message.Account.AccID.ToString());
             }
             List<Account> contacts = dbContext.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
-            ViewBag.Contacts = contacts;
-            #endregion
-
-            Newfeed newfeed = new Newfeed();
-            newfeed.account = acc;
-            newfeed.allPosts = posts;
-
-            ViewBag.Account = acc;
-            ViewBag.Posts = posts;
-
-            return View(newfeed);
-        }
-
-        Account GetAccount()
-        {
-            Account acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
-            return acc;
-        }
-
-        List<Post> GetAllRelatePosts()
-        {
-            var acc = GetAccount();
-            List<Follow> followers = dbContext.Follow.Where(s => s.FollowerID == acc.AccID).ToList();
-            List<string> followerIDs = new List<string>();
-            foreach (var follower in followers)
-            {
-                followerIDs.Add(follower.UserID.ToString());
-            }
-            List<Post> posts = dbContext.Post.Where(s => followerIDs.Contains(s.UserID.ToString()) || s.UserID == acc.AccID).ToList();
-            return posts;
+            return contacts;
         }
 
         [HttpGet]

@@ -1,7 +1,4 @@
 ﻿
-@using TuHuTuHu.Models;
-
-@model TuHuTuHu.Models.Newfeed
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.">
     <title>TuHu</title>
     <link rel="icon" href="/Content/favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
     <link rel="stylesheet" href="/Content/css/style.css">
     <link rel="stylesheet" href="/Content/css/lightbox.css">
-    <!-- <script src="js/slimscroll.js"></script> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="js/slimscroll.js"></script> -->
 
     @if (IsSectionDefined("AddToHead"))
     {
@@ -30,10 +27,10 @@
 
     <div class="sidebar">
         <div class="userzone">
-            <img id="usrcover" src=@Model.account.CoverLink alt="usravt">
-            <img src=@Model.account.AvtLink alt="usravt" id="usravt">
-            <p id="username">@Model.account.Fullname</p>
-            <p id="tagname">@("@" + Model.account.Username)</p>
+            <img id="usrcover" src=@ViewBag.CurrentUser.CoverLink alt="usravt">
+            <img src=@ViewBag.CurrentUser.AvtLink alt="usravt" id="usravt">
+            <p id="username">@ViewBag.CurrentUser.Fullname</p>
+            <p id="tagname">@("@" + ViewBag.CurrentUser.Username)</p>
         </div>
         <div class="sidenav">
             <a class="anav" href=@Url.Action("Index", "Newfeed")>
