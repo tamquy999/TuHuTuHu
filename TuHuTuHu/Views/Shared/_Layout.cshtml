@@ -37,7 +37,7 @@
                 <img class="navimg" src="/Content/images/home.svg" alt="">
                 <p class="navname">Trang chủ</p>
             </a>
-            <a class="anav" href="/userpage.html">
+            <a class="anav" href=@Url.Action("Index", "Userpage", new { id = ViewBag.CurrentUser.AccID })>
                 <img class="navimg" src="/Content/images/person.svg" alt="">
                 <p class="navname">Cá nhân</p>
             </a>
