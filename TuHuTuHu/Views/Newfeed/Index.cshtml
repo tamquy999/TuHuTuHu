@@ -32,7 +32,7 @@
         <div class="post">
             <div class="post-info">
                 <a href=""><img class="post-avt" src=@post.Account.AvtLink></a>
-                <b><a class="post-name" href="">@post.Account.Fullname</a></b>
+                <b><a class="post-name" href=@Url.Action("Index", "Userpage", new { id = post.Account.AccID })>@post.Account.Fullname</a></b>
                 <a href=@Url.Action("Index", "Post", new { userID = post.Account.AccID, postID = post.PostID})>
                     <div class="post-time">@post.CreatedAt.ToString()</div>
                 </a>
@@ -61,7 +61,7 @@
                     <div class="post-cmt">
                         <a href=""><img class="post-cmt-avt" src=@comment.Account.AvtLink></a>
                         <div class="post-cmt-content">
-                            <b><a class="post-cmt-name" href="">@comment.Account.Fullname</a></b>
+                            <b><a class="post-cmt-name" href=@Url.Action("Index", "Userpage", new { id = comment.Account.AccID})>@comment.Account.Fullname</a></b>
                             <p class="post-cmt-text">@comment.Content</p>
                         </div>
                     </div>

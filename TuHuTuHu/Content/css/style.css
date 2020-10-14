@@ -297,7 +297,7 @@ input[name="searchbar"] {
     /* width: 660px; */
     border-radius: 30px;
     box-shadow: 10px 10px 100px var(--main-sdw-color);
-    margin-bottom: 30px;
+    padding-bottom: 20px;
 }
 
 .yourmind-textpart {
