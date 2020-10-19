@@ -8,25 +8,15 @@ using TuHuTuHu.Models;
 namespace TuHuTuHu.Controllers
 {
     [Authorize]
-    public class UserpageController : Controller
+    public class FollowController : Controller
     {
         MyDBContext dbContext = new MyDBContext();
         Account acc = new Account();
 
-        // GET: Userpage
-        public ActionResult Index(int id)
+        // GET: Follow
+        public ActionResult Index()
         {
-            acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
-
-            ViewBag.CurrentUser = acc;
-            ViewBag.Contacts = GetAllContact();
-
-            Userpage userpage = new Userpage();
-
-            userpage.account = dbContext.Account.Find(id);
-            userpage.posts = dbContext.Post.Where(s => s.UserID == id).ToList();
-
-            return View(userpage);
+            return View();
         }
 
         List<Account> GetAllContact()
@@ -45,6 +35,5 @@ namespace TuHuTuHu.Controllers
             List<Account> contacts = dbContext.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
             return contacts;
         }
-
     }
 }

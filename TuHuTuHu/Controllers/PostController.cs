@@ -7,6 +7,7 @@ using TuHuTuHu.Models;
 
 namespace TuHuTuHu.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         MyDBContext dbContext = new MyDBContext();

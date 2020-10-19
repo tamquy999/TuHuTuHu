@@ -7,6 +7,7 @@ using TuHuTuHu.Models;
 
 namespace TuHuTuHu.Controllers
 {
+    [Authorize]
     public class SearchController : Controller
     {
         MyDBContext dbContext = new MyDBContext();

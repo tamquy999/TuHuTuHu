@@ -8,6 +8,7 @@ using TuHuTuHu.Models;
 
 namespace TuHuTuHu.Controllers
 {
+    [Authorize]
     public class NewfeedController : Controller
     {
 
@@ -21,7 +22,7 @@ namespace TuHuTuHu.Controllers
         {
             Session["postCount"] = 0;
 
-            acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
+            acc = dbContext.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
 
             var posts = GetAllRelatePosts();
 
