@@ -16,7 +16,7 @@ namespace TuHuTuHu.Controllers
 
         public ActionResult Index(string postID)
         {
-            acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
+            acc = dbContext.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
 
             ViewBag.CurrentUser = acc;
             ViewBag.Contacts = GetAllContact();
