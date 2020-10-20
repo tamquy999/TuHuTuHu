@@ -1,0 +1,59 @@
+﻿@*<div class="yourmsg">
+        <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
+        <div class="yourmsg-bg">
+            This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+        </div>
+    </div>
+    <div class="mymsg">
+        <div class="mymsg-bg">
+            This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+        </div>
+    </div>
+    <div class="yourmsg">
+        <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
+        <div class="yourmsg-bg">
+            This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+        </div>
+    </div>
+    <div class="mymsg">
+        <div class="mymsg-bg">
+            This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+        </div>
+    </div>
+    <div class="yourmsg">
+        <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
+        <div class="yourmsg-bg">
+            This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+        </div>
+    </div>
+    <div class="mymsg">
+        <div class="mymsg-bg">
+            This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
+        </div>
+    </div>*@
+
+
+@if (ViewBag.Chat != null)
+{
+    foreach (var msg in ViewBag.Chat)
+    {
+
+        if (msg.SenderID == ViewBag.CurrentUser.AccID)
+        {
+            <div class="mymsg">
+                <div class="mymsg-bg">
+                    @msg.Content
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="yourmsg">
+                <img class="yourmsg-avt" src=@msg.Account1.AvtLink alt="">
+                <div class="yourmsg-bg">
+                    @msg.Content
+                </div>
+            </div>
+        }
+    }
+}

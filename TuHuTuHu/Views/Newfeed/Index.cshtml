@@ -6,19 +6,16 @@
 <div class="posts">
     <div class="onYourMind">
         <div class="yourmind-textpart">
-            <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
-            <div id="postBtn" onclick="triggerPostButton()">Đăng</div>
+            <form action="/Newfeed/UploadFile" enctype="multipart/form-data" method="post" style="width: 100%">
 
-            @using (Html.BeginForm("UploadFile",
-                    "Newfeed",
-                    FormMethod.Post,
-                    new { enctype = "multipart/form-data" }))
-            {
-                <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" style="display: none;" />
-                <button id="post-btn" type="submit" style="display: none">ádasdj</button>
+                <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
+                <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" hidden="hidden" />
+                <button id="post-btn" type="submit" hidden="hidden"></button>
 
                 @ViewBag.Message
-            }
+            </form>
+
+            <div id="postBtn" onclick="triggerPostButton()">Đăng</div>
         </div>
         <div class="add-img-container">
             <div class="listimg"></div>
@@ -41,7 +38,7 @@
                 <p class="post-text">@post.Content</p>
             </div>
             <div class="post-images">
-                <a href=@post.ImgLink data-lightbox="image-1" data-title=@post.Content><img class="post-img" src=@post.ImgLink alt=""></a>
+                <a href=@post.ImgLink data-lightbox="image-1" data-title='@post.Content'><img class="post-img" src=@post.ImgLink alt=""></a>
             </div>
             <div class="sep-line"></div>
             <div class="post-react">

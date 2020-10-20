@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="/Content/css/style.css">
     <link rel="stylesheet" href="/Content/css/lightbox.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script src="js/slimscroll.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/Scripts/js/script.js"></script>
+    <script src="/Scripts/js/lightbox.js"></script>
 
     @if (IsSectionDefined("AddToHead"))
     {
@@ -58,9 +60,10 @@
     <div id="contacts">
         @foreach (var contact in ViewBag.Contacts)
         {
-            <div id="contact" onclick="openChat()">
+            <div id="contact" onclick="openChat('@contact.Fullname', '@contact.AccID')">
                 <img src=@contact.AvtLink alt="" class="contactavt">
                 <p class="contactname">@contact.Fullname</p>
+                <p id=@("contact_" + contact.AccID) hidden="hidden">@contact.AccID</p>
             </div>
         }
 
@@ -72,48 +75,20 @@
     </div>
 
     <div class="chat">
-        <div id="btn-bubble" onclick="openChat()">
+        <div id="btn-bubble" onclick="anotherOpenChat()">
             <img id="chaticon" src="/Content/images/chat.svg" alt="">
         </div>
         <!-- <button id="btn-openchat" onclick="openChat()">Open</button> -->
         <div id="chatbox">
-            <b><div id="chathead" onclick="closeChat()">Nguyễn Văn Kiên</div></b>
+            <div id="chathead" onclick="closeChat()">
+                <a href="javascript:void(0)" onclick="chatheadClick()"><strong id="chatname"></strong></a>
+                <p id="chatheadID" hidden="hidden"></p>
+            </div>
 
             <div id="chatbody">
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
+                @Html.Partial("_ChatBody")
             </div>
+
             <div class="chat-footer">
                 <form>
                     <textarea name="texting" oninput="auto_grow_chat(this)" placeholder="Nhập tin nhắn..."></textarea>
@@ -131,8 +106,7 @@
         </form>
     </div>
 
-    <script src="/Scripts/js/script.js"></script>
-    <script src="/Scripts/js/lightbox.js"></script>
+
 </body>
 
 </html>

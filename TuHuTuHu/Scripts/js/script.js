@@ -1,4 +1,4 @@
-var customScroll;
+﻿var customScroll;
 
 // function Init() {
 //     customScroll = new slimScroll(document.getElementById('contacts'));
@@ -23,8 +23,13 @@ function auto_grow_chat(element) {
 }
 
 
+// CHat head click
+function chatheadClick() {
+    window.location.href = "/Userpage/Index/" + $('#chatheadID').html();
+}
+
 // Open chat bubble
-function openChat() {
+function anotherOpenChat() {
     var chatbox = document.getElementById('chatbox');
     chatbox.style.height = '450px';
     chatbox.style.width = '330px';
@@ -35,6 +40,41 @@ function openChat() {
 
     var chatbody = document.getElementById("chatbody");
     chatbody.scrollTop = chatbody.scrollHeight;
+
+    $('#btn-bubble').hide();
+}
+function openChat(fullName, accID) {
+
+    $.ajax({
+        url: '/Base/LoadConversation',
+        type: "POST",
+        //contentType: "application/json",
+        //dataType: "text",
+        data: {accID},
+        success: function (data) {
+            $('#chatbody').html(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //some errror, some show err msg to user and log the error  
+            $('#chatbody').html(xhr.responseText);
+            //alert(xhr.responseText);
+
+        }
+    });
+
+    var chatbox = document.getElementById('chatbox');
+    chatbox.style.height = '450px';
+    chatbox.style.width = '330px';
+    chatbox.style.visibility = 'visible';
+
+    var contacts = document.getElementById('contacts');
+    contacts.style.height = 'calc(100% - 530px)';
+
+    var chatbody = document.getElementById("chatbody");
+    chatbody.scrollTop = chatbody.scrollHeight;
+
+    $('#chatname').html(fullName);
+    $('#chatheadID').html(accID);
 
     $('#btn-bubble').hide();
 

@@ -9,60 +9,28 @@ using TuHuTuHu.Models;
 namespace TuHuTuHu.Controllers
 {
     [Authorize]
-    public class NewfeedController : Controller
+    public class NewfeedController : BaseController
     {
-
-        MyDBContext dbContext = new MyDBContext();
-        Account acc = new Account();
         int postPerClick = 2;
-
 
         // GET: Newfeed
         public ActionResult Index()
         {
             Session["postCount"] = 0;
 
-            acc = dbContext.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+            acc = base.db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
 
-            var posts = GetAllRelatePosts();
+            var posts = base.GetAllRelatePosts();
 
-            ViewBag.CurrentUser = acc;
-            ViewBag.Contacts = GetAllContact();
+            ViewBag.Chat = null;
+            ViewBag.CurrentUser = base.acc;
+            ViewBag.Contacts = GetAllContact();     
 
             Newfeed newfeed = new Newfeed();
-            newfeed.account = acc;
+            newfeed.account = base.acc;
             newfeed.allPosts = posts;
 
             return View(posts);
-        }
-
-        List<Post> GetAllRelatePosts()
-        {
-            List<Follow> followers = dbContext.Follow.Where(s => s.FollowerID == acc.AccID).ToList();
-            List<string> followerIDs = new List<string>();
-            foreach (var follower in followers)
-            {
-                followerIDs.Add(follower.UserID.ToString());
-            }
-            List<Post> posts = dbContext.Post.Where(s => followerIDs.Contains(s.UserID.ToString()) || s.UserID == acc.AccID).ToList();
-            return posts;
-        }
-
-        List<Account> GetAllContact()
-        {
-            List<Msg> messages = dbContext.Msg.Where(s => s.Account.AccID == acc.AccID || s.Account1.AccID == acc.AccID).ToList();
-            List<string> contactIDs = new List<string>();
-            foreach (var message in messages)
-            {
-                // Neu minh la nguoi gui thi lay id nguoi nhan va nguoc lai
-                if (message.Account.AccID == acc.AccID)
-                {
-                    contactIDs.Add(message.Account1.AccID.ToString());
-                }
-                else contactIDs.Add(message.Account.AccID.ToString());
-            }
-            List<Account> contacts = dbContext.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
-            return contacts;
         }
 
         [HttpGet]
@@ -72,14 +40,26 @@ namespace TuHuTuHu.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(HttpPostedFileBase file)
+        public ActionResult UploadFile(HttpPostedFileBase file, string yourMind)
         {
             if (file != null && file.ContentLength > 0)
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/UploadedFiles"), DateTime.Now.Ticks.ToString() + System.IO.Path.GetExtension(file.FileName));
+                    var filename = DateTime.Now.Ticks.ToString() + System.IO.Path.GetExtension(file.FileName);
+                    string path = Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
                     file.SaveAs(path);
                     ViewBag.Message = "File uploaded successfully";
+
+                    acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+
+                    Post post = new Post();
+                    post.CreatedAt = DateTime.Now;
+                    post.Content = yourMind;
+                    post.ImgLink = "/UploadedFiles/" + filename;
+                    post.UserID = acc.AccID;
+
+                    db.Post.Add(post);
+                    db.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -89,7 +69,7 @@ namespace TuHuTuHu.Controllers
             {
                 ViewBag.Message = "You have not specified a file.";
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         public PartialViewResult GetPostData()
