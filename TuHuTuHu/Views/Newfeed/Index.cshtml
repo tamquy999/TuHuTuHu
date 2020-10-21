@@ -6,7 +6,7 @@
 <div class="posts">
     <div class="onYourMind">
         <div class="yourmind-textpart">
-            <form action="/Newfeed/UploadFile" enctype="multipart/form-data" method="post" style="width: 100%">
+            <form action="/Base/UploadFile" enctype="multipart/form-data" method="post" style="width: 100%">
 
                 <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
                 <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" hidden="hidden" />
@@ -18,7 +18,7 @@
             <div id="postBtn" onclick="triggerPostButton()">Đăng</div>
         </div>
         <div class="add-img-container">
-            <div class="listimg"></div>
+            <div class="output" id="output"></div>
             <div id="addimg-btn" onclick="triggerFileButton()">
             </div>
         </div>
@@ -42,9 +42,12 @@
             </div>
             <div class="sep-line"></div>
             <div class="post-react">
-                <div class="love" onclick="LoveClick('@("love_" + post.PostID)')">
-                    <img class="love-icon" id=@("love_" + post.PostID) src="/Content/images/heart_line.svg" alt="">
-                    <p class="love-text" style="font-weight: 800">Thích <span style="font-weight: 200; font-size: 13px;">@post.Love.Count()</span> </p>
+                <div class="love" onclick="LoveClick(@(post.PostID))">
+                    <img class="love-icon" id=@("love_" + post.PostID)>
+                    <script type="text/javascript">
+                        LoveCheck(@post.PostID)
+                    </script>
+                    <p class="love-text" style="font-weight: 800">Thích <span id=@("lovetext_" + post.PostID) style="font-weight: 200; font-size: 13px;">@post.Love.Count()</span> </p>
                 </div>
                 <div class="comment" onclick="CommentIcon_Click('@("comment_reply_" + post.PostID)')">
                     <img class="comment-icon" id=@("comment_" + post.PostID) src="/Content/images/comment.svg" alt="">

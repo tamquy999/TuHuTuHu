@@ -50,7 +50,7 @@ function openChat(fullName, accID) {
         type: "POST",
         //contentType: "application/json",
         //dataType: "text",
-        data: {accID},
+        data: { accID },
         success: function (data) {
             $('#chatbody').html(data);
         },
@@ -134,25 +134,74 @@ function triggerPostButton() {
 
 
 // Load image
-
-var imageList = [];
-var index = 0;
 var loadImage = function (event) {
-    imageList.push(event.target.files[0]);
-
-    $('.listimg').append('<div class="output" id="output' + index + '"></div>');
-
-    $('#output' + index).css('background-image', 'url(' + URL.createObjectURL(imageList[index]) + ')');
-    $('#output' + index).css('display', 'block');
+    $('#output').css('background-image', 'url(' + URL.createObjectURL(event.target.files[0]) + ')');
+    $('#output').css('display', 'block');
     index++;
 };
 
+// CHeck love status
+function LoveCheck(postID) {
+    $.ajax({
+        url: '/Base/LoveCheck',
+        type: 'GET',
+        dataType: 'json',
+        data: { postID: postID },
+        success: function (data) {
+            if (data == true) {
+                $('#love_' + postID).attr('src', '/Content/images/heart.svg');
+                //$('#love_' + postID).load(location.href + ' #love_' + postID, '');
+            }
+            else {
+                $('#love_' + postID).attr('src', '/Content/images/heart_line.svg');
+                //$('#love_' + postID).load(location.href + ' #love_' + postID, '');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //some errror, some show err msg to user and log the error
+            alert(xhr.responseText);
+
+        }
+    });
+}
+
 // Click love button
-function LoveClick(Love_PostID) {
-    if ($('#' + Love_PostID).attr('src') == '/Content/images/heart_line.svg') {
-        $('#' + Love_PostID).attr('src', '/Content/images/heart.svg');
+function LoveClick(postID) {
+    //var temp = '#love_' + postID;
+    if ($('#love_' + postID).attr('src') == '/Content/images/heart_line.svg') {
+        $.ajax({
+            url: '/Base/LoveClick',
+            type: 'GET',
+            dataType: 'json',
+            data: { postID: postID },
+            success: function (data) {
+                $('#love_' + postID).attr('src', '/Content/images/heart.svg');
+                $('#lovetext_' + postID).load(location.href + ' #lovetext_' + postID, '');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //some errror, some show err msg to user and log the error
+                alert(xhr.responseText);
+
+            }
+        });
     }
-    else $('#' + Love_PostID).attr('src', '/Content/images/heart_line.svg');
+    else {
+        $.ajax({
+            url: '/Base/LoveUnClick',
+            type: 'GET',
+            dataType: 'json',
+            data: { postID: postID },
+            success: function (data) {
+                $('#love_' + postID).attr('src', '/Content/images/heart_line.svg');
+                $('#lovetext_' + postID).load(location.href + ' #lovetext_' + postID, '');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //some errror, some show err msg to user and log the error
+                alert(xhr.responseText);
+
+            }
+        });
+    }
 }
 
 // Click comment button

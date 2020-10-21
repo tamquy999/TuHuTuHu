@@ -231,7 +231,7 @@
     <Content Include="Views\Userpage\Index.cshtml" />
     <Content Include="Views\Follow\Index.cshtml" />
     <Content Include="Views\Shared\_ChatBody.cshtml" />
-    <Content Include="Views\Base\View.cshtml" />
+    <Content Include="Views\Base\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

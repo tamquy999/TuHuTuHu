@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -55,6 +56,76 @@ namespace TuHuTuHu.Controllers
             ViewBag.Chat = messages;
 
             return PartialView("_ChatBody", "Shared");
+        }
+
+        [HttpGet]
+        public ActionResult UploadFile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UploadFile(HttpPostedFileBase file, string yourMind)
+        {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    var filename = DateTime.Now.Ticks.ToString() + System.IO.Path.GetExtension(file.FileName);
+                    string path = Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
+                    file.SaveAs(path);
+                    ViewBag.Message = "File uploaded successfully";
+
+                    acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+
+                    Post post = new Post();
+                    post.CreatedAt = DateTime.Now;
+                    post.Content = yourMind;
+                    post.ImgLink = "/UploadedFiles/" + filename;
+                    post.UserID = acc.AccID;
+
+                    db.Post.Add(post);
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            else
+            {
+                ViewBag.Message = "You have not specified a file.";
+            }
+            return RedirectToAction("Index", "Newfeed");
+        }
+
+        public ActionResult LoveClick(int postID)
+        {
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+            Love love = new Love();
+            love.PostID = postID;
+            love.UserID = acc.AccID;
+            db.Love.Add(love);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LoveUnClick(int postID)
+        {
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+            Love love = db.Love.Where(s => s.PostID == postID && s.UserID == acc.AccID).FirstOrDefault();
+            db.Love.Remove(love);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LoveCheck(int postID)
+        {
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+            Love love = db.Love.Where(s => s.PostID == postID && s.UserID == acc.AccID).FirstOrDefault();
+            if (love != null)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
     }
 }
