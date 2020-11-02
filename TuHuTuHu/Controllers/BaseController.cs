@@ -16,6 +16,7 @@ namespace TuHuTuHu.Controllers
 
         protected List<Post> GetAllRelatePosts()
         {
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
             List<Follow> followers = db.Follow.Where(s => s.FollowerID == acc.AccID).ToList();
             List<string> followerIDs = new List<string>();
             foreach (var follower in followers)

@@ -420,6 +420,20 @@ textarea[name="yourMind"] {
     font-size: 12px;
 }
 
+.moreBtn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+/*    width: 15px;*/
+}
+.dropdown-menu-right {
+    top: 30px;
+}
+
+.btn {
+    background: var(--main-bg-color);
+}
+
 .post-content {
     position: relative;
     /* background-color: #888888; */

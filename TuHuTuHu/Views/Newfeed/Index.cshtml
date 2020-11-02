@@ -9,8 +9,8 @@
             <form action="/Base/UploadFile" enctype="multipart/form-data" method="post" style="width: 100%">
 
                 <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
-                <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" hidden="hidden" />
-                <button id="post-btn" type="submit" hidden="hidden"></button>
+                <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" style="display:none" />
+                <button id="post-btn" type="submit" style="display:none"></button>
 
                 @ViewBag.Message
             </form>
@@ -33,6 +33,16 @@
                 <a href=@Url.Action("Index", "Post", new { userID = post.Account.AccID, postID = post.PostID})>
                     <div class="post-time">@post.CreatedAt.ToString()</div>
                 </a>
+                @*<img class="moreBtn" src="~/Content/images/more.svg" alt="" />*@
+                <div class="dropdown">
+                    <button class="moreBtn btn dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#">Sửa bài viết</a></li>
+                        <li><a href="#">Xoá bài viết</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="post-content">
                 <p class="post-text">@post.Content</p>
@@ -73,6 +83,5 @@
                 </div>
             </div>
         </div>
-
     }
 </div>

@@ -19,7 +19,7 @@ function auto_grow_chat(element) {
     var styleVal = getComputedStyle(chatbody);
     // console.log(parseInt(element.scrollHeight));
     chatbody.style.height = (368 - parseInt(element.scrollHeight)).toString() + "px";
-    chatbody.scrollTop = chatbody.scrollHeight;
+    //chatbody.scrollTop = chatbody.scrollHeight;
 }
 
 
@@ -52,31 +52,32 @@ function openChat(fullName, accID) {
         //dataType: "text",
         data: { accID },
         success: function (data) {
-            $('#chatbody').html(data);
+            $('#chatbox').html(data);
+            var chatbox = document.getElementById('chatbox');
+            chatbox.style.height = '450px';
+            chatbox.style.width = '330px';
+            chatbox.style.visibility = 'visible';
+
+            var contacts = document.getElementById('contacts');
+            contacts.style.height = 'calc(100% - 530px)';
+
+            var chatbody = document.getElementById("chatbody");
+            chatbody.scrollTop = chatbody.scrollHeight;
+
+            $('#chatname').html(fullName);
+            $('#chatheadID').html(accID);
+
+            $('#btn-bubble').hide();
         },
         error: function (xhr, ajaxOptions, thrownError) {
             //some errror, some show err msg to user and log the error  
-            $('#chatbody').html(xhr.responseText);
+            $('#chatbox').html(xhr.responseText);
             //alert(xhr.responseText);
 
         }
     });
 
-    var chatbox = document.getElementById('chatbox');
-    chatbox.style.height = '450px';
-    chatbox.style.width = '330px';
-    chatbox.style.visibility = 'visible';
-
-    var contacts = document.getElementById('contacts');
-    contacts.style.height = 'calc(100% - 530px)';
-
-    var chatbody = document.getElementById("chatbody");
-    chatbody.scrollTop = chatbody.scrollHeight;
-
-    $('#chatname').html(fullName);
-    $('#chatheadID').html(accID);
-
-    $('#btn-bubble').hide();
+    
 
     // customScroll.resetValues;
 }
