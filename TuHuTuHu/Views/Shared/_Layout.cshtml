@@ -31,8 +31,9 @@
 
     <div class="sidebar">
         <div class="userzone">
-            <div class="dropdown">
+            @*<div class="dropdown">
                 <button class="moreBtn btn bg-transparent dropdown-toggle" type="button" data-toggle="dropdown">
+                    <img id="noti-icon" src="~/Content/images/noti-unseen.png" alt="" />
                     <img id="noti-icon" src="~/Content/images/noti-unseen.png" alt="" />
                 </button>
                 <ul class="dropdown-menu" style="position: absolute; top:50px; left: 280px">
@@ -55,8 +56,7 @@
                         </a>
                     </li>
                 </ul>
-            </div>
-            @*<img id="noti-icon" src="~/Content/images/noti-unseen.png" alt="" />*@
+            </div>*@
             <img id="usrcover" src=@ViewBag.CurrentUser.CoverLink alt="usravt">
             <img src=@ViewBag.CurrentUser.AvtLink alt="usravt" id="usravt">
             <p id="username">@ViewBag.CurrentUser.Fullname</p>
@@ -92,7 +92,7 @@
                 <img src=@contact.AvtLink alt="" class="contactavt">
                 <p class="contactname">@contact.Fullname</p>
                 <p id=@("contact_" + contact.AccID) hidden="hidden">@contact.AccID</p>
-                <div class="msg-dot" style="position: absolute; right: 10px; top: 30px; width: 10px; height: 10px; background-color: red; border-radius: 5px;";></div>
+                <div class="msg-dot" style="position: absolute; right: 10px; top: 30px; width: 10px; height: 10px; background-color: deeppink; border-radius: 5px;" ;></div>
             </div>
         }
 

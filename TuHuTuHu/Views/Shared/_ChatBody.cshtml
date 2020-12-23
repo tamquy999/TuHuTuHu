@@ -34,8 +34,8 @@
 <div class="chat-footer">
     <form>
         <textarea id="texting" name="texting" oninput="auto_grow_chat(this)" placeholder="Nhập tin nhắn..."></textarea>
-        <!--<button id="sendBtn">-->@*<img id="sendimg" src="/Content/images/send.svg" alt="">*@<!--</button>-->
-        <input type="button" id="sendBtn" name="name" value="send" />
+        <img id="sendimg" src="/Content/images/send.svg" alt="">
+        <input type="button" id="sendBtn" name="name" value="send" hidden="hidden"/>
     </form>
 </div>
 
@@ -74,6 +74,10 @@
             e.preventDefault();
             $('#sendBtn').click();
         }
+    });
+
+    $('#sendimg').click(function (e) {
+        $('#sendBtn').click();
     });
 
 </script>

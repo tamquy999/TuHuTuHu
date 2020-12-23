@@ -232,6 +232,7 @@ input[name="searchbar"] {
 
 .sidenav {
     padding-top: 30px;
+    overflow: hidden;
 }
 
 .anav {
@@ -557,6 +558,10 @@ textarea[name="yourMind"] {
     text-decoration: none;
 }
 
+.post-cmt-text {
+    margin: 0px;
+}
+
 .post-cmt-reply {
     /* background-color: #000; */
     margin-top: 20px;
@@ -795,6 +800,7 @@ textarea[name="texting"] {
     }
     #usrcover {
         background-image: none;
+        left: -260px;
     }
     #usravt {
         border-radius: 20px;

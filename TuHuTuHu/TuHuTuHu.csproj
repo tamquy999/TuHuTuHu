@@ -287,6 +287,7 @@
     <Content Include="Views\Shared\_Post.cshtml" />
     <Content Include="Views\Login\ForgotPass.cshtml" />
     <Content Include="Views\Shared\_Modal.cshtml" />
+    <Content Include="Views\Shared\_Comments.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
