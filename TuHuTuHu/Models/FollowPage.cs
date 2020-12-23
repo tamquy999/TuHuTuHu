@@ -12,5 +12,9 @@ namespace TuHuTuHu.Models
         public List<Follow> following { get; set; }
 
         public List<Follow> follower { get; set; }
+
+        public int countFollowing { get; set; }
+
+        public int countFollower { get; set; }
     }
 }

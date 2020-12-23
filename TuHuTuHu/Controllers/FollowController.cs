@@ -8,7 +8,7 @@ using TuHuTuHu.Models;
 namespace TuHuTuHu.Controllers
 {
     [Authorize]
-    public class FollowController : Controller
+    public class FollowController : BaseController
     {
         MyDBContext dbContext = new MyDBContext();
         Account acc = new Account();
@@ -16,7 +16,20 @@ namespace TuHuTuHu.Controllers
         // GET: Follow
         public ActionResult Index()
         {
-            return View();
+            acc = base.db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+
+            ViewBag.CurrentUser = acc;
+            ViewBag.Contacts = GetAllContact();
+
+            FollowPage followpage = new FollowPage();
+
+            followpage.account = acc;
+            followpage.follower = dbContext.Follow.Where(s => s.UserID == acc.AccID).ToList();
+            followpage.following = dbContext.Follow.Where(s => s.FollowerID == acc.AccID).ToList();
+
+            followpage.countFollower = dbContext.Follow.Count(s => s.UserID == acc.AccID);
+            followpage.countFollowing = dbContext.Follow.Count(s => s.FollowerID == acc.AccID);
+            return View(followpage);
         }
 
         List<Account> GetAllContact()
