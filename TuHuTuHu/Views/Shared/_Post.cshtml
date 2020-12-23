@@ -1,0 +1,71 @@
+﻿@model TuHuTuHu.Models.Post
+
+<div class="post">
+    <div class="post-info">
+        <a href=""><img class="post-avt" src=@Model.Account.AvtLink></a>
+        <b><a class="post-name" href=@Url.Action("Index", "Userpage", new { id = Model.Account.AccID })>@Model.Account.Fullname</a></b>
+        <a href=@Url.Action("Index", "Post", new { userID = Model.Account.AccID, postID = Model.PostID})>
+            <div class="post-time">@Model.CreatedAt.ToString()</div>
+        </a>
+        @*<img class="moreBtn" src="~/Content/images/more.svg" alt="" />*@
+        @if (Model.Account.Username == ViewBag.CurrentUser.Username)
+        {
+            <div class="dropdown">
+                <button class="moreBtn btn bg-transparent dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="caret" style="border-width:6px;"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a id="editBtn" class="open-EditPostDialog" href="#editPostDialog" data-post-id="@Model.PostID" data-toggle="modal">Sửa bài viết</a></li>
+                    <li><a id="deleteBtn" class="open-DeletePostDialog" href="#deletePostDialog" data-post-id="@Model.PostID" data-toggle="modal">Xoá bài viết</a></li>
+                </ul>
+            </div>
+        }
+    </div>
+
+    <div class="post-content">
+        <p class="post-text" data-post-id="@Model.PostID">
+            @{
+                var content = @Html.Raw(Model.Content.Replace(Environment.NewLine, "<br/>"));
+            }
+            @content
+        </p>
+    </div>
+
+    <div class="post-images">
+        <a href=@Model.ImgLink data-lightbox="image-1" data-title='@Model.Content'><img class="post-img" src=@Model.ImgLink alt=""></a>
+    </div>
+
+    <div class="sep-line"></div>
+    <div class="post-react">
+        <div class="love" onclick="LoveClick(@(Model.PostID))">
+            <img class="love-icon" id=@("love_" + Model.PostID)>
+            <script type="text/javascript">
+                        LoveCheck(@Model.PostID)
+            </script>
+            <p class="love-text" style="font-weight: 800">Thích <span id=@("lovetext_" + Model.PostID) style="font-weight: 200; font-size: 13px;">@Model.Love.Count()</span> </p>
+        </div>
+        <div class="comment" onclick="CommentIcon_Click('@("comment_reply_" + Model.PostID)')">
+            <img class="comment-icon" id=@("comment_" + Model.PostID) src="/Content/images/comment.svg" alt="">
+            <p class="comment-text" style="font-weight: 800">Bình Luận <span style="font-weight: 200; font-size: 13px;">@Model.Comment.Count()</span> </p>
+        </div>
+    </div>
+    <div class="sep-line"></div>
+
+    <div class="post-comments">
+        @foreach (var comment in Model.Comment)
+        {
+            <div class="post-cmt">
+                <a href=""><img class="post-cmt-avt" src=@comment.Account.AvtLink></a>
+                <div class="post-cmt-content">
+                    <b><a class="post-cmt-name" href=@Url.Action("Index", "Userpage", new { id = comment.Account.AccID})>@comment.Account.Fullname</a></b>
+                    <p class="post-cmt-text">@comment.Content</p>
+                </div>
+            </div>
+        }
+
+        <div class="post-cmt-reply">
+            <img class="post-cmt-avt" src=@ViewBag.CurrentUser.AvtLink alt="">
+            <textarea id=@("comment_reply_" + Model.PostID) name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
+        </div>
+    </div>
+</div>

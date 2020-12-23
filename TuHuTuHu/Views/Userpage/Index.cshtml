@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="/Content/css/userpage.css">
 }
 
+@{
+    ViewBag.Title = "User";
+}
+
 <div class="userMainFrame">
     <div class="userPageHeader">
         <img id="userWallpaper" src=@Model.account.CoverLink>
@@ -34,22 +38,25 @@
 
     <!--END USER HEADER-->
 
-    <div class="onYourMind">
-        <div class="yourmind-textpart">
-            <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
-            <div id="postBtn">Đăng</div>
-        </div>
-        <div class="add-img-container">
-            <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" style="display: none;" />
+    @if (Model.account.Username == ViewBag.CurrentUser.Username)
+    {
+        <div class="onYourMind">
+            <div class="yourmind-textpart">
+                <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
+                <div id="postBtn">Đăng</div>
+            </div>
+            <div class="add-img-container">
+                <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" style="display: none;" />
 
-            <div class="listimg"></div>
-            <!-- <div class="output" id="output1"></div> -->
+                <div class="listimg"></div>
+                <!-- <div class="output" id="output1"></div> -->
 
 
-            <div id="addimg-btn" onclick="triggerFileButton()">
+                <div id="addimg-btn" onclick="triggerFileButton()">
+                </div>
             </div>
         </div>
-    </div>
+    }
 
     <!--Old Posts here-->
 

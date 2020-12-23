@@ -24,13 +24,40 @@ namespace TuHuTuHu.Controllers
 
             ViewBag.Chat = null;
             ViewBag.CurrentUser = base.acc;
-            ViewBag.Contacts = GetAllContact();     
+            ViewBag.Contacts = base.GetAllContact();     
 
             Newfeed newfeed = new Newfeed();
             newfeed.account = base.acc;
             newfeed.allPosts = posts;
 
             return View(posts);
+        }
+
+        public ActionResult DeletePost(string selectedPost)
+        {
+            var comments = db.Comment.Where(s => s.PostID.ToString() == selectedPost).ToList();
+            foreach (var cmt in comments)
+            {
+                db.Comment.Remove(cmt);
+            }
+            var loves = db.Love.Where(s => s.PostID.ToString() == selectedPost).ToList();
+            foreach (var love in loves)
+            {
+                db.Love.Remove(love);
+            }
+            var post = db.Post.Find(Convert.ToInt32(selectedPost));
+            db.Post.Remove(post);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Newfeed");
+        }
+
+        public ActionResult EditPost(string selectedPost, string yourMind)
+        {
+            var post = db.Post.Find(Convert.ToInt32(selectedPost));
+            post.Content = yourMind;
+            db.SaveChanges();
+            //return RedirectToAction("Index", "Newfeed");
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         public PartialViewResult GetPostData()

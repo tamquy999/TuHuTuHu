@@ -12,7 +12,7 @@ namespace TuHuTuHu.Controllers
     {
         // GET: Login
         public ActionResult Index()
-        {
+        { 
             return View();
         }
 
@@ -40,6 +40,37 @@ namespace TuHuTuHu.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public ActionResult Signup(string fullname, string user, string pass)
+        {
+            using (MyDBContext context = new MyDBContext())
+            {
+                ViewBag.SignupMessage = null;
+
+                if (context.Account.Where(s => s.Username == user).FirstOrDefault() == null)
+                {
+                    Account acc = new Account();
+                    acc.Username = user;
+                    acc.Fullname = fullname;
+                    acc.Pass = pass;
+                    acc.JoinDate = DateTime.Now;
+                    acc.AvtLink = "/Content/images/avatar.png";
+                    acc.CoverLink = "/Content/images/usrcover.jpg";
+
+                    context.Account.Add(acc);
+                    context.SaveChanges();
+                    ViewBag.SignupMessage = "Đăng ký thành công.";
+
+                    FormsAuthentication.SetAuthCookie(acc.Username, true);
+                    return RedirectToAction("Index", "Newfeed");
+                }
+
+                ViewBag.SignupMessage = "Đăng ký không thành công. Vui lòng thử lại.";
+                return View();
+            }
         }
     }
 }

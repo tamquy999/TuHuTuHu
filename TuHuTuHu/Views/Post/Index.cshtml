@@ -2,50 +2,58 @@
 
 @model TuHuTuHu.Models.Post
 
-<div class="posts">
-    <div class="post">
-        <div class="post-info">
-            <a href=""><img class="post-avt" src=@Model.Account.AvtLink></a>
-            <b><a class="post-name" href="">@Model.Account.Fullname</a></b>
-            <div class="post-time">@Model.CreatedAt</div>
-        </div>
-        <div class="post-content">
-            <p class="post-text">
-                @Model.Content
-            </p>
-        </div>
-        <div class="post-images">
-            <a href=@Model.ImgLink data-lightbox="image-1" data-title="@Model.Content"><img class="post-img" src=@Model.ImgLink alt=""></a>
-        </div>
-        <div class="sep-line"></div>
-        <div class="post-react">
-            <div class="love" onclick="LoveClick()">
-                <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
-                <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">@Model.Love.Count()</span> </p></b>
-            </div>
-            <div class="comment">
-                <img class="comment-icon" src="/Content/images/comment.svg" alt="">
-                <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">@Model.Comment.Count()</span> </p></b>
-            </div>
-        </div>
-        <div class="sep-line"></div>
-        <div class="post-comments">
-            @foreach (var item in Model.Comment)
-            {
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src=@item.Account.AvtLink></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href="">@item.Account.Fullname</a></b>
-                        <p class="post-cmt-text">@item.Content</p>
-                    </div>
-                </div>
-            }
-            <div class="post-cmt-reply">
-                <img class="post-cmt-avt" src=@ViewBag.CurrentUser.AvtLink alt="">
-                <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
-            </div>
+@{
+    ViewBag.Title = "Post";
+}
 
-        </div>
-    </div>
+<div class="posts" style="top: 0px">
+    @*<div class="post">
+            <div class="post-info">
+                <a href=""><img class="post-avt" src=@Model.Account.AvtLink></a>
+                <b><a class="post-name" href="">@Model.Account.Fullname</a></b>
+                <div class="post-time">@Model.CreatedAt</div>
+            </div>
+            <div class="post-content">
+                <p class="post-text">
+                    @Model.Content
+                </p>
+            </div>
+            <div class="post-images">
+                <a href=@Model.ImgLink data-lightbox="image-1" data-title="@Model.Content"><img class="post-img" src=@Model.ImgLink alt=""></a>
+            </div>
+            <div class="sep-line"></div>
+            <div class="post-react">
+                <div class="love" onclick="LoveClick()">
+                    <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
+                    <b><p class="love-text">Thích <span style="font-weight: 200; font-size: 13px;">@Model.Love.Count()</span> </p></b>
+                </div>
+                <div class="comment">
+                    <img class="comment-icon" src="/Content/images/comment.svg" alt="">
+                    <b><p class="comment-text">Bình Luận <span style="font-weight: 200; font-size: 13px;">@Model.Comment.Count()</span> </p></b>
+                </div>
+            </div>
+            <div class="sep-line"></div>
+            <div class="post-comments">
+                @foreach (var item in Model.Comment)
+                {
+                    <div class="post-cmt">
+                        <a href=""><img class="post-cmt-avt" src=@item.Account.AvtLink></a>
+                        <div class="post-cmt-content">
+                            <b><a class="post-cmt-name" href="">@item.Account.Fullname</a></b>
+                            <p class="post-cmt-text">@item.Content</p>
+                        </div>
+                    </div>
+                }
+                <div class="post-cmt-reply">
+                    <img class="post-cmt-avt" src=@ViewBag.CurrentUser.AvtLink alt="">
+                    <textarea name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
+                </div>
+
+            </div>
+        </div>*@
+
+    @Html.Partial("_Post", Model)
 
 </div>
+
+@Html.Partial("_Modal")

@@ -48,10 +48,10 @@ a {
     width: 400px;
     height: 100%;
     /* background-image: url(/images/people-talking.svg); */
-    background-image: url(/Content/images/Group_of_people.svg);
-    background-size: cover;
+/*    background-image: url(/Content/images/Group_of_people.png);*/
+/*    background-size: cover;*/
     /* background-position: -80px; */
-    background-repeat: no-repeat;
+/*    background-repeat: no-repeat;*/
     transition: 400ms ease-out;
     z-index: 1;
 }

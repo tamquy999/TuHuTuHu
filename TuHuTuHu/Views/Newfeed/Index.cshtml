@@ -3,6 +3,10 @@
 
 @model List<TuHuTuHu.Models.Post>
 
+@{
+    ViewBag.Title = "Newfeed";
+}
+
 <div class="posts">
     <div class="onYourMind">
         <div class="yourmind-textpart">
@@ -26,62 +30,10 @@
 
     @foreach (Post post in Model)
     {
-        <div class="post">
-            <div class="post-info">
-                <a href=""><img class="post-avt" src=@post.Account.AvtLink></a>
-                <b><a class="post-name" href=@Url.Action("Index", "Userpage", new { id = post.Account.AccID })>@post.Account.Fullname</a></b>
-                <a href=@Url.Action("Index", "Post", new { userID = post.Account.AccID, postID = post.PostID})>
-                    <div class="post-time">@post.CreatedAt.ToString()</div>
-                </a>
-                @*<img class="moreBtn" src="~/Content/images/more.svg" alt="" />*@
-                <div class="dropdown">
-                    <button class="moreBtn btn dropdown-toggle" type="button" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#">Sửa bài viết</a></li>
-                        <li><a href="#">Xoá bài viết</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="post-content">
-                <p class="post-text">@post.Content</p>
-            </div>
-            <div class="post-images">
-                <a href=@post.ImgLink data-lightbox="image-1" data-title='@post.Content'><img class="post-img" src=@post.ImgLink alt=""></a>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-react">
-                <div class="love" onclick="LoveClick(@(post.PostID))">
-                    <img class="love-icon" id=@("love_" + post.PostID)>
-                    <script type="text/javascript">
-                        LoveCheck(@post.PostID)
-                    </script>
-                    <p class="love-text" style="font-weight: 800">Thích <span id=@("lovetext_" + post.PostID) style="font-weight: 200; font-size: 13px;">@post.Love.Count()</span> </p>
-                </div>
-                <div class="comment" onclick="CommentIcon_Click('@("comment_reply_" + post.PostID)')">
-                    <img class="comment-icon" id=@("comment_" + post.PostID) src="/Content/images/comment.svg" alt="">
-                    <p class="comment-text" style="font-weight: 800">Bình Luận <span style="font-weight: 200; font-size: 13px;">@post.Comment.Count()</span> </p>
-                </div>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-comments">
-                @foreach (var comment in post.Comment)
-                {
-                    <div class="post-cmt">
-                        <a href=""><img class="post-cmt-avt" src=@comment.Account.AvtLink></a>
-                        <div class="post-cmt-content">
-                            <b><a class="post-cmt-name" href=@Url.Action("Index", "Userpage", new { id = comment.Account.AccID})>@comment.Account.Fullname</a></b>
-                            <p class="post-cmt-text">@comment.Content</p>
-                        </div>
-                    </div>
-                }
-
-                <div class="post-cmt-reply">
-                    <img class="post-cmt-avt" src=@ViewBag.CurrentUser.AvtLink alt="">
-                    <textarea id=@("comment_reply_" + post.PostID) name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
-                </div>
-            </div>
-        </div>
+        @Html.Partial("_Post", post);
     }
+    <div id="clickedPost"></div>
 </div>
+
+<!-- Edit & Delete Modal -->
+@Html.Partial("_Modal")

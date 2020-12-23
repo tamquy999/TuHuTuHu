@@ -68,6 +68,7 @@ namespace TuHuTuHu.Controllers
         [HttpPost]
         public ActionResult UploadFile(HttpPostedFileBase file, string yourMind)
         {
+            string imgLink = "NULL";
             if (file != null && file.ContentLength > 0)
                 try
                 {
@@ -76,16 +77,7 @@ namespace TuHuTuHu.Controllers
                     file.SaveAs(path);
                     ViewBag.Message = "File uploaded successfully";
 
-                    acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
-
-                    Post post = new Post();
-                    post.CreatedAt = DateTime.Now;
-                    post.Content = yourMind;
-                    post.ImgLink = "/UploadedFiles/" + filename;
-                    post.UserID = acc.AccID;
-
-                    db.Post.Add(post);
-                    db.SaveChanges();
+                    imgLink = "/UploadedFiles/" + filename;
                 }
                 catch (Exception ex)
                 {
@@ -95,6 +87,18 @@ namespace TuHuTuHu.Controllers
             {
                 ViewBag.Message = "You have not specified a file.";
             }
+
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+
+            Post post = new Post();
+            post.CreatedAt = DateTime.Now;
+            post.Content = yourMind;
+            post.ImgLink = imgLink;
+            post.UserID = acc.AccID;
+
+            db.Post.Add(post);
+            db.SaveChanges();
+
             return RedirectToAction("Index", "Newfeed");
         }
 

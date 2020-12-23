@@ -157,6 +157,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Hubs\CommentHub.cs" />
     <Compile Include="Hubs\CustomUserIdProvider.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -187,6 +188,7 @@
     <Content Include="Content\css\_notificationBar.css" />
     <Content Include="Content\images\add.svg" />
     <Content Include="Content\images\addimg.svg" />
+    <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\calendar.svg" />
     <Content Include="Content\images\chat.svg" />
     <Content Include="Content\images\close.png" />
@@ -211,11 +213,14 @@
     <Content Include="Content\images\logout.svg" />
     <Content Include="Content\images\more.svg" />
     <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\noti-unseen.png" />
+    <Content Include="Content\images\noti.png" />
     <Content Include="Content\images\Parties And Gatherings Illustration.svg" />
     <Content Include="Content\images\people-talking.svg" />
     <Content Include="Content\images\person.svg" />
     <Content Include="Content\images\post-pic.jpg" />
     <Content Include="Content\images\prev.png" />
+    <Content Include="Content\images\Profile_avatar_placeholder_large.png" />
     <Content Include="Content\images\search.svg" />
     <Content Include="Content\images\send.svg" />
     <Content Include="Content\images\Tuhu-Logo.png" />
@@ -279,6 +284,9 @@
     <Content Include="Views\Base\Index.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Views\Shared\_Post.cshtml" />
+    <Content Include="Views\Login\ForgotPass.cshtml" />
+    <Content Include="Views\Shared\_Modal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

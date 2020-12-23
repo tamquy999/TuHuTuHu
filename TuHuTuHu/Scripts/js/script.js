@@ -209,3 +209,38 @@ function LoveClick(postID) {
 function CommentIcon_Click(Comment_PostID) {
     $('#' + Comment_PostID).focus();
 }
+
+$('#deleteBtn').on('show.bs.modal', function (e) {
+    var postID = $('#deleteBtn').data('post-id');
+    $('#selectedPost').html(postID);
+});
+
+
+// Confirm dialogs
+
+$(document).on("click", ".open-DeletePostDialog", function (e) {
+
+	e.preventDefault();
+
+	var _self = $(this);
+
+	var postId = _self.data('post-id');
+    $("#selectedPost").val(postId);
+
+	$(_self.attr('href')).modal('show');
+});
+
+$(document).on("click", ".open-EditPostDialog", function (e) {
+
+    e.preventDefault();
+
+    var _self = $(this);
+
+    var postId = _self.data('post-id');
+    $("#selectedPost1").val(postId);
+
+    var content = $('.post-text[data-post-id="' + postId + '"]').text().trim();
+    $("textarea#editInput").html(content);
+
+    $(_self.attr('href')).modal('show');
+});
