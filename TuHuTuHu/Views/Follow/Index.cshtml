@@ -1,1 +1,78 @@
-﻿
+﻿@model TuHuTuHu.Models.FollowPage
+
+@section AddToHead
+{
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link rel="stylesheet" href="/Content/css/follow.css">
+    <link rel="stylesheet" href="/Content/css/userpage.css">
+    <script src="/Scripts/js/follow.js"></script>
+    <script src="/Scripts/js/userpage.js"></script>
+    <script src="/Scripts/js/slimscroll.js"></script>
+    <script src="/Scripts/js/lightbox.js"></script>
+}
+
+@*@{
+        ViewBag.Title = "Follow";
+    }*@
+
+<!--#region Main Follow-->
+<div class="userMainFrame">
+    <div class="userPageHeader">
+        <img id="userWallpaper" src=@Model.account.CoverLink>
+
+        <div class="userAvatarFrame">
+            <!-- <img id="userAvatar" src="images/image.png" data-lightbox="image-1"> -->
+            <!-- <a href="/images/image.png" data-lightbox="image-1">
+                <img class="uPost-img" src="images/image.png">
+            </a> -->
+            <a class="userAvatarLink" href=@Model.account.AvtLink data-lightbox="image-1">
+                <img class="userAvatar" src=@Model.account.AvtLink>
+            </a>
+        </div>
+        <a id="userName">@Model.account.Fullname</a>
+        <a id="userID">@("@"+Model.account.Username)</a>
+        <div id="dateOfJoin">
+            <img id="iconCalendar" src="images/calendar.svg">
+            <a id="textCalendar"> Đã tham gia từ tháng @Model.account.JoinDate.Value.Month năm @Model.account.JoinDate.Value.Year</a>
+        </div>
+        <div id="followCount">
+            <a id="countFollowMe"><b id="numFollowing">@Model.countFollowing</b> Đang theo dõi</a>
+            <a id="countMeFollowed"><b id="numFollowed">@Model.countFollower</b> Người theo dõi</a>
+        </div>
+        <div id="btnEditProfile">Chỉnh sửa hồ sơ</div>
+
+    </div>
+
+    <div class="menuFollow">
+        <div class="menuFollowTab">
+            <button class="followTabLink active" id="btnFL" onclick="openFollowContent(event,'followingList')">Đang theo dõi</button>
+            <button class="followTabLink" id="btnFL" onclick="openFollowContent(event,'followedList')">Người theo dõi</button>
+        </div>
+        <div class="listFollow">
+            <div id="followingList" class="followTabContent">
+                @foreach (var _following in Model.following)
+                {
+                    <div class="elementOfFollowList" id="personID" onclick="window.location=@("/Userpage/Index/"+_following.UserID)">
+                        <img src=@_following.Account1.AvtLink class="avtUserFl">
+                        <a class="userNameFl" href=@("/Userpage/Index/"+_following.UserID)>@_following.Account1.Fullname</a>
+                        <a class="userIDFl" href=@("/Userpage/Index/"+_following.UserID)>@("@"+_following.Account1.Username)</a>
+                        <button class="btnFollowing" id="useID_followingBtn"><span>Đang theo dõi</span></button>
+                    </div>
+                }
+            </div>
+
+            <div id="followedList" class="followTabContent">
+                @foreach (var _followed in Model.follower)
+                {
+                    <div class="elementOfFollowList" id="personID" onclick="window.location=@("/Userpage/Index/"+_followed.FollowerID)">
+                        <img src=@_followed.Account.AvtLink class="contactavt">
+                        <a class="userNameFl" href=@("/Userpage/Index/"+_followed.FollowerID)>@_followed.Account.Fullname</a>
+                        <a class="userIDFl" href=@("/Userpage/Index/"+_followed.FollowerID)>@("@"+_followed.Account.Username)</a>
+                        <button class="btnFollow" id="useID_followingBtn"><span>Theo dõi</span></button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!--#endregion-->
