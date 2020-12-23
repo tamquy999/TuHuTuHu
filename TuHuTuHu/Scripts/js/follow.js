@@ -34,4 +34,5 @@ function openFollowContent(event, nameOfContent) {
     document.getElementById(nameOfContent).style.display = "block";
     event.currentTarget.className += " active";
 
+    console.log(nameOfContent);
 }
