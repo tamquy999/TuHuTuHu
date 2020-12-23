@@ -8,93 +8,56 @@ using TuHuTuHu.Models;
 
 namespace TuHuTuHu.Controllers
 {
-    public class NewfeedController : Controller
+    [Authorize]
+    public class NewfeedController : BaseController
     {
-
-        MyDBContext dbContext = new MyDBContext();        
-
         int postPerClick = 2;
-
 
         // GET: Newfeed
         public ActionResult Index()
         {
             Session["postCount"] = 0;
 
-            var acc = GetAccount();
+            acc = base.db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
 
-            var posts = GetAllRelatePosts();
+            var posts = base.GetAllRelatePosts();
 
-            #region Get all contacts
-            List<Msg> messages = dbContext.Msg.Where(s => s.Account.AccID == acc.AccID || s.Account1.AccID == acc.AccID).ToList();
-            List<string> contactIDs = new List<string>();
-            foreach (var message in messages)
-            {
-                // Neu minh la nguoi gui thi lay id nguoi nhan va nguoc lai
-                if (message.Account.AccID == acc.AccID)
-                {
-                    contactIDs.Add(message.Account1.AccID.ToString());
-                }
-                else contactIDs.Add(message.Account.AccID.ToString());
-            }
-            List<Account> contacts = dbContext.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
-            ViewBag.Contacts = contacts;
-            #endregion
+            ViewBag.Chat = null;
+            ViewBag.CurrentUser = base.acc;
+            ViewBag.Contacts = base.GetAllContact();     
 
             Newfeed newfeed = new Newfeed();
-            newfeed.account = acc;
+            newfeed.account = base.acc;
             newfeed.allPosts = posts;
 
-            ViewBag.Account = acc;
-            ViewBag.Posts = posts;
-
-            return View(newfeed);
+            return View(posts);
         }
 
-        Account GetAccount()
+        public ActionResult DeletePost(string selectedPost)
         {
-            Account acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
-            return acc;
-        }
-
-        List<Post> GetAllRelatePosts()
-        {
-            var acc = GetAccount();
-            List<Follow> followers = dbContext.Follow.Where(s => s.FollowerID == acc.AccID).ToList();
-            List<string> followerIDs = new List<string>();
-            foreach (var follower in followers)
+            var comments = db.Comment.Where(s => s.PostID.ToString() == selectedPost).ToList();
+            foreach (var cmt in comments)
             {
-                followerIDs.Add(follower.UserID.ToString());
+                db.Comment.Remove(cmt);
             }
-            List<Post> posts = dbContext.Post.Where(s => followerIDs.Contains(s.UserID.ToString()) || s.UserID == acc.AccID).ToList();
-            return posts;
-        }
-
-        [HttpGet]
-        public ActionResult UploadFile()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult UploadFile(HttpPostedFileBase file)
-        {
-            if (file != null && file.ContentLength > 0)
-                try
-                {
-                    string path = Path.Combine(Server.MapPath("~/UploadedFiles"), DateTime.Now.Ticks.ToString() + System.IO.Path.GetExtension(file.FileName));
-                    file.SaveAs(path);
-                    ViewBag.Message = "File uploaded successfully";
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                }
-            else
+            var loves = db.Love.Where(s => s.PostID.ToString() == selectedPost).ToList();
+            foreach (var love in loves)
             {
-                ViewBag.Message = "You have not specified a file.";
+                db.Love.Remove(love);
             }
-            return View();
+            var post = db.Post.Find(Convert.ToInt32(selectedPost));
+            db.Post.Remove(post);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Newfeed");
+        }
+
+        public ActionResult EditPost(string selectedPost, string yourMind)
+        {
+            var post = db.Post.Find(Convert.ToInt32(selectedPost));
+            post.Content = yourMind;
+            db.SaveChanges();
+            //return RedirectToAction("Index", "Newfeed");
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         public PartialViewResult GetPostData()

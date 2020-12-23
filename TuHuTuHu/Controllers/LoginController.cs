@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using TuHuTuHu.Models;
 
 namespace TuHuTuHu.Controllers
@@ -11,54 +12,65 @@ namespace TuHuTuHu.Controllers
     {
         // GET: Login
         public ActionResult Index()
-        {
-            Account acc = CheckCookies();
-            if (acc != null)
-            {
-                Session["userID"] = acc.AccID.ToString().Trim();
-                return RedirectToAction("Index", "Newfeed");
-            }
+        { 
             return View();
         }
 
-
-
         [HttpPost]
-        public ActionResult LoginResult(string user, string pass)
+        public ActionResult Index(string user, string pass)
         {
-            MyDBContext dbContext = new MyDBContext();
-            Account acc = dbContext.Account.Where(s => s.Username == user && s.Pass == pass).FirstOrDefault<Account>();
-            if (acc != null)
+            using (MyDBContext context = new MyDBContext())
             {
-                Session["userID"] = acc.AccID.ToString().Trim();
-                HttpCookie accInfo = new HttpCookie("accInfo");
-                accInfo["userID"] = acc.AccID.ToString().Trim();
-                accInfo.Expires = DateTime.Now.AddHours(1);
-                Response.Cookies.Add(accInfo);
-                return RedirectToAction("Index", "Newfeed");
+                ViewBag.LoginMessage = null;
+                bool IsValidUser = context.Account.Any(s => s.Username.ToLower() ==
+                     user && s.Pass == pass);
+                if (IsValidUser)
+                {
+                    var acc = context.Account.Where(s => s.Username == user).FirstOrDefault();
+                    FormsAuthentication.SetAuthCookie(acc.Username, true);
+                    return RedirectToAction("Index", "Newfeed");
+                }
+                ViewBag.LoginMessage = "Tài khoản hoặc mật khẩu sai";
+                return View();
             }
-            else return View("Index");
         }
 
         [HttpPost]
-        public ActionResult LogoutResult()
+        public ActionResult Logout()
         {
-            HttpCookie accInfo = new HttpCookie("accInfo");
-            accInfo.Expires = DateTime.Now.AddDays(-1);
-            Response.Cookies.Add(accInfo);
-            return RedirectToAction("Index", "Login");
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index");
         }
 
-        public Account CheckCookies()
+
+        [HttpPost]
+        public ActionResult Signup(string fullname, string user, string pass)
         {
-            Account acc = null;
-            HttpCookie reqCookies = Request.Cookies["accInfo"];
-            if (reqCookies != null)
+            using (MyDBContext context = new MyDBContext())
             {
-                acc = new Account();
-                acc.AccID = Convert.ToInt32(reqCookies["userID"].ToString());
+                ViewBag.SignupMessage = null;
+
+                if (context.Account.Where(s => s.Username == user).FirstOrDefault() == null)
+                {
+                    Account acc = new Account();
+                    acc.Username = user;
+                    acc.Fullname = fullname;
+                    acc.Pass = pass;
+                    acc.JoinDate = DateTime.Now;
+                    acc.AvtLink = "/Content/images/avatar.png";
+                    acc.CoverLink = "/Content/images/usrcover.jpg";
+
+                    context.Account.Add(acc);
+                    context.SaveChanges();
+                    ViewBag.SignupMessage = "Đăng ký thành công.";
+
+                    FormsAuthentication.SetAuthCookie(acc.Username, true);
+                    return RedirectToAction("Index", "Newfeed");
+                }
+
+                ViewBag.SignupMessage = "Đăng ký không thành công. Vui lòng thử lại.";
+                return View();
             }
-            return acc;
         }
     }
 }

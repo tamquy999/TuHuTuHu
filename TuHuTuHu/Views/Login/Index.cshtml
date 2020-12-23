@@ -2,6 +2,8 @@
     Layout = null;
 }
 
+@model TuHuTuHu.Models.Account
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,13 +16,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
+<body onload="Init()">
+
+    <script>
+        alert("abc");
+    </script>
     <div class="container">
-        <div class="image">
-        </div>
+        <img class="image" src="/Content/images/Group_of_people.png">
         <div class="login-container">
             <img class="logo" src="/Content/images/Logo.png" alt="">
-            <form class="form" action=@Url.Action("LoginResult", "Login") method="post">
+            <form class="form" action=@Url.Action("Index", "Login") method="post">
+                @Html.AntiForgeryToken()
                 <input type="text" id="user" name="user" placeholder="Tài khoản..." required>
                 <input type="password" id="pass" name="pass" placeholder="Mật khẩu..." required>
                 <input type="submit" id="login" name="login" value="Đăng nhập">
@@ -34,7 +40,8 @@
         </div>
         <div class="signup-container">
             <img class="logo" src="/Content/images/Logo.png" alt="">
-            <form class="form" action="">
+            <form class="form" action=@Url.Action("Signup", "Login") method="post">
+                @Html.AntiForgeryToken()
                 <input type="text" id="fullname" name="fullname" placeholder="Họ và tên..." required>
                 <input type="text" id="user" name="user" placeholder="Tài khoản..." required>
                 <input type="password" id="pass" name="pass" placeholder="Mật khẩu..." required>

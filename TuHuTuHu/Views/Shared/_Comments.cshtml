@@ -1,0 +1,61 @@
+﻿@model TuHuTuHu.Models.Post
+
+<div id=@("post-comments-" + Model.PostID)>
+    @foreach (var comment in Model.Comment)
+    {
+        <div class="post-cmt">
+            <a href=""><img class="post-cmt-avt" src=@comment.Account.AvtLink></a>
+            <div class="post-cmt-content">
+                <b><a class="post-cmt-name" href=@Url.Action("Index", "Userpage", new { id = comment.Account.AccID})>@comment.Account.Fullname</a></b>
+                <p class="post-cmt-text">@comment.Content</p>
+            </div>
+        </div>
+    }
+
+</div>
+<div class="post-cmt-reply">
+    <img class="post-cmt-avt" src=@ViewBag.CurrentUser.AvtLink alt="">
+    <textarea id=@("comment_reply_" + Model.PostID) class="txtComment" name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
+    <input type="button" id=@("commentBtn" + Model.PostID) name="name" value="comment" hidden="hidden" />
+</div>
+
+
+<script>
+    $(function () {
+        // Reference the auto-generated proxy for the hub.
+        var cmt = $.connection.commentHub;
+        // Create a function that the hub can call back to display comments.
+        cmt.client.addCommentToPost = function (postID, accID, avtLink, fullname, content) {
+            //$('#post-comments-' + postID).append(content);
+            $('#post-comments-' + postID).append(`
+                <div class="post-cmt">
+                    <a href=""><img class="post-cmt-avt" src=` + avtLink + `></a>
+                    <div class="post-cmt-content">
+                        <b><a class="post-cmt-name" href="Userpage/Index/` + accID + `">` + fullname + `</a></b>
+                        <p class="post-cmt-text">` + content + `</p>
+                    </div>
+                </div>
+            `);
+
+        };
+        $.connection.hub.start().done(function () {
+            $('#commentBtn' + @Model.PostID).click(function () {
+                //console.log(@Model.PostID);
+                //alert(@Model.PostID + " " + @ViewBag.CurrentUser.AccID + " " + $('#comment_reply_' + @Model.PostID).val());
+                // Call the Comment method on the hub.
+                cmt.server.comment(@Model.PostID, @ViewBag.CurrentUser.AccID, $('#comment_reply_' + @Model.PostID).val());
+                // Clear Textarea
+                $('#comment_reply_' + @Model.PostID).val('');
+            });
+        });
+    });
+
+    $('#comment_reply_' + @Model.PostID).keypress(function (e) {
+        if (e.keyCode == 13 && !e.shiftKey) {
+            e.preventDefault();
+            $('#commentBtn' + @Model.PostID).click();
+        }
+    });
+
+</script>
+

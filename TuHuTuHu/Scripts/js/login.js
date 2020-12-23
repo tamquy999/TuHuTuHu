@@ -1,5 +1,11 @@
+function Init() {
+    $('.signup-container').hide();
+}
+
 // Sign up ask click
 function SignupClick() {
+    $('.login-container').hide();
+    $('.signup-container').show();
     $('.image').css('left', '400px');
     // $('.login-container').css('left', '0px');
     // $('.signup-container').css('left', '0px');
@@ -14,6 +20,8 @@ function SignupClick() {
 
 // login ask click
 function LoginClick() {
+    $('.signup-container').hide();
+    $('.login-container').show();
     $('.image').css('left', '0px');
     // $('.login-container').css('left', '400px');
     // $('.signup-container').css('left', '400px');

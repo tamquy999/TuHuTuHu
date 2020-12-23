@@ -1,7 +1,4 @@
 ﻿
-@using TuHuTuHu.Models;
-
-@model TuHuTuHu.Models.Newfeed
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,13 +6,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.">
-    <title>TuHu</title>
+    <title>TuHu - @ViewBag.Title</title>
     <link rel="icon" href="/Content/favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
     <link rel="stylesheet" href="/Content/css/style.css">
-    <link rel="stylesheet" href="/Content/css/lightbox.css">
+    <link rel="stylesheet" href="~/Content/css/lightbox.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
     <!-- <script src="js/slimscroll.js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/js/script.js"></script>
+    <script src="/Scripts/js/lightbox.js"></script>
 
     @if (IsSectionDefined("AddToHead"))
     {
@@ -30,17 +31,43 @@
 
     <div class="sidebar">
         <div class="userzone">
-            <img id="usrcover" src=@Model.account.CoverLink alt="usravt">
-            <img src=@Model.account.AvtLink alt="usravt" id="usravt">
-            <p id="username">@Model.account.Fullname</p>
-            <p id="tagname">@("@" + Model.account.Username)</p>
+            @*<div class="dropdown">
+                <button class="moreBtn btn bg-transparent dropdown-toggle" type="button" data-toggle="dropdown">
+                    <img id="noti-icon" src="~/Content/images/noti-unseen.png" alt="" />
+                    <img id="noti-icon" src="~/Content/images/noti-unseen.png" alt="" />
+                </button>
+                <ul class="dropdown-menu" style="position: absolute; top:50px; left: 280px">
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <img src="~/Content/images/avatar.png" alt="Alternate Text" style="width: 50px" />
+                            abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <img src="~/Content/images/avatar.png" alt="Alternate Text" style="width: 50px" />
+                            abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <img src="~/Content/images/avatar.png" alt="Alternate Text" style="width: 50px" />
+                            abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc
+                        </a>
+                    </li>
+                </ul>
+            </div>*@
+            <img id="usrcover" src=@ViewBag.CurrentUser.CoverLink alt="usravt">
+            <img src=@ViewBag.CurrentUser.AvtLink alt="usravt" id="usravt">
+            <p id="username">@ViewBag.CurrentUser.Fullname</p>
+            <p id="tagname">@("@" + ViewBag.CurrentUser.Username)</p>
         </div>
         <div class="sidenav">
             <a class="anav" href=@Url.Action("Index", "Newfeed")>
                 <img class="navimg" src="/Content/images/home.svg" alt="">
                 <p class="navname">Trang chủ</p>
             </a>
-            <a class="anav" href="/userpage.html">
+            <a class="anav" href=@Url.Action("Index", "Userpage", new { id = ViewBag.CurrentUser.AccID })>
                 <img class="navimg" src="/Content/images/person.svg" alt="">
                 <p class="navname">Cá nhân</p>
             </a>
@@ -50,7 +77,7 @@
             </a>
         </div>
 
-        <form action="@Url.Action("LogoutResult", "Login")" method="post">
+        <form action="@Url.Action("Logout", "Login")" method="post">
             <div class="logoutbtn" onclick="triggerLogoutButton()">Đăng xuất</div>
             <button id="logout-btn" type="submit" style="display: none">ádasdj</button>
         </form>
@@ -61,9 +88,11 @@
     <div id="contacts">
         @foreach (var contact in ViewBag.Contacts)
         {
-            <div id="contact" onclick="openChat()">
+            <div id="contact" onclick="openChat('@contact.Fullname', '@contact.AccID')">
                 <img src=@contact.AvtLink alt="" class="contactavt">
                 <p class="contactname">@contact.Fullname</p>
+                <p id=@("contact_" + contact.AccID) hidden="hidden">@contact.AccID</p>
+                <div class="msg-dot" style="position: absolute; right: 10px; top: 30px; width: 10px; height: 10px; background-color: deeppink; border-radius: 5px;" ;></div>
             </div>
         }
 
@@ -75,55 +104,16 @@
     </div>
 
     <div class="chat">
-        <div id="btn-bubble" onclick="openChat()">
+        <div id="btn-bubble" onclick="anotherOpenChat()">
             <img id="chaticon" src="/Content/images/chat.svg" alt="">
         </div>
         <!-- <button id="btn-openchat" onclick="openChat()">Open</button> -->
         <div id="chatbox">
-            <b><div id="chathead" onclick="closeChat()">Nguyễn Văn Kiên</div></b>
-
-            <div id="chatbody">
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="yourmsg">
-                    <img class="yourmsg-avt" src="/Content/images/kien-avt.jpg" alt="">
-                    <div class="yourmsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-                <div class="mymsg">
-                    <div class="mymsg-bg">
-                        This is a message Nguyễn Văn Kiên sent to Nguyễn Ngọc Hưng
-                    </div>
-                </div>
-            </div>
-            <div class="chat-footer">
-                <form>
-                    <textarea name="texting" oninput="auto_grow_chat(this)" placeholder="Nhập tin nhắn..."></textarea>
-                    <img id="sendimg" src="/Content/images/send.svg" alt="">
-                </form>
-            </div>
+            @Html.Partial("_ChatBody")
         </div>
+
+
+
     </div>
 
     <div class="topbar">
@@ -134,8 +124,17 @@
         </form>
     </div>
 
-    <script src="/Scripts/js/script.js"></script>
-    <script src="/Scripts/js/lightbox.js"></script>
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the chat page and send messages.-->
+    <script>
+        $(function () { window.hubReady = $.connection.hub.start(); });
+    </script>
+
 </body>
 
 </html>

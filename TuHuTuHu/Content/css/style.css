@@ -11,11 +11,17 @@
     padding: 0;
     font-family: "Quicksand";
     font-size: 15px;
+    box-sizing: unset;
     /* font-weight: 300; */
+}
+
+img {
+    vertical-align: unset;
 }
 
 a {
     text-decoration: none;
+    color: black;
 }
 
 a:visited {
@@ -73,6 +79,7 @@ body {
 textarea[name="yourMind"],
 textarea[name="texting"],
 textarea[name="cmt-reply"] {
+    white-space: pre-wrap;
     background-color: var(--sub-bg-color);
     border-radius: 15px;
     padding: 10px 20px 10px 20px;
@@ -140,7 +147,7 @@ input[name="searchbar"] {
     width: 350px;
     height: 100vh;
     background-color: var(--sub-bg-color);
-    overflow: hidden;
+/*    overflow: hidden;*/
     transition: 300ms ease-out;
 }
 
@@ -148,6 +155,37 @@ input[name="searchbar"] {
     width: 350px;
     height: 200px;
     /* background-color: #000; */
+}
+
+#noti-icon {
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    z-index: 1;
+/*    -webkit-filter: drop-shadow(5px 5px 5px #222);*/
+    filter: drop-shadow(0px 0px 8px #222);
+}
+#noti-icon:hover {
+
+    filter: drop-shadow(0px 0px 12px #222);
+}
+
+.dropdown-menu {
+    border-radius: 20px;
+    padding: 10px 0px;
+    border: none;
+}
+
+.dropdown:hover .dropdown-menu {
+/*    display: block;*/
+}
+
+.dropdown-menu > li > a {
+    padding: 10px;
+    margin: 0px 10px;
+    border-radius: 10px;
 }
 
 #usrcover {
@@ -194,6 +232,7 @@ input[name="searchbar"] {
 
 .sidenav {
     padding-top: 30px;
+    overflow: hidden;
 }
 
 .anav {
@@ -279,6 +318,7 @@ input[name="searchbar"] {
     /* position: absolute;
     top: 20px;
     left: calc(50% - 330px); */
+    top: 20px;
     position: absolute;
     left: 50%;
     width: 660px;
@@ -295,8 +335,6 @@ input[name="searchbar"] {
     /* width: 660px; */
     border-radius: 30px;
     box-shadow: 10px 10px 100px var(--main-sdw-color);
-    margin-bottom: 30px;
-    margin-top: 20px;
     padding-bottom: 20px;
 }
 
@@ -306,7 +344,7 @@ input[name="searchbar"] {
 
 textarea[name="yourMind"] {
     margin: 20px 20px 20px 20px;
-    width: calc(100% - 150px);
+    width: calc(100% - 80px);
     /* min-height: 50px; */
     max-height: 500px;
     top: 20px;
@@ -389,7 +427,7 @@ textarea[name="yourMind"] {
     background-color: var(--main-bg-color);
     border-radius: 30px;
     box-shadow: 10px 10px 100px var(--main-sdw-color);
-    margin-bottom: 30px;
+    margin-top: 30px;
     padding: 20px 20px 20px 20px;
 }
 
@@ -418,6 +456,22 @@ textarea[name="yourMind"] {
     top: 27px;
     left: 60px;
     font-size: 12px;
+}
+
+.moreBtn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+/*    font-size: 30px;*/
+    background: var(--main-bg-color);
+/*    width: 15px;*/
+}
+.dropdown-menu-right {
+    top: 30px;
+}
+
+.btn {
+/*    background: var(--main-bg-color);*/
 }
 
 .post-content {
@@ -502,6 +556,10 @@ textarea[name="yourMind"] {
 
 .post-cmt-name {
     text-decoration: none;
+}
+
+.post-cmt-text {
+    margin: 0px;
 }
 
 .post-cmt-reply {
@@ -640,6 +698,10 @@ textarea[name="cmt-reply"] {
     color: white;
 }
 
+#chatname {
+    color: white;
+}
+
 #btn-closechat {
     float: right;
     margin-right: 15px;
@@ -738,6 +800,7 @@ textarea[name="texting"] {
     }
     #usrcover {
         background-image: none;
+        left: -260px;
     }
     #usravt {
         border-radius: 20px;

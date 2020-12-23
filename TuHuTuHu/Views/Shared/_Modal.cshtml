@@ -1,0 +1,43 @@
+﻿<div class="modal fade" id="deletePostDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <strong></strong>
+                <h4 class="modal-title" id="myModalLabel"><strong>Xác nhận xoá</strong></h4>
+            </div>
+            <form action="/Newfeed/DeletePost" enctype="multipart/form-data" method="post">
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xoá bài viết này không?</p>
+                    <input type="text" name="selectedPost" id="selectedPost" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thôi</button>
+                    <button type="submit" class="btn btn-danger">Xoá luôn</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editPostDialog" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <strong></strong>
+                <h4 class="modal-title" id="editModalLabel"><strong>Sửa bài viết</strong></h4>
+            </div>
+            <form action="/Newfeed/EditPost" enctype="multipart/form-data" method="post">
+                <div class="modal-body">
+                    <textarea id="editInput" name="yourMind" oninput="auto_grow(this)"></textarea>
+                    <input type="text" name="selectedPost" id="selectedPost1" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button type="submit" class="btn btn-success">Lưu lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

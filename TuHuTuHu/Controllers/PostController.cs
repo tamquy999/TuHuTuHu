@@ -7,19 +7,23 @@ using TuHuTuHu.Models;
 
 namespace TuHuTuHu.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
-        MyDBContext db = new MyDBContext();
+        MyDBContext dbContext = new MyDBContext();
         Post thisPost = new Post();
-        Account myAcc = new Account();
+        Account acc = new Account();
 
         public ActionResult Index(string postID)
         {
-            myAcc = db.Account.Find(Convert.ToInt32(Session["userID"]));
-            
-            if (postID != "" && postID != null && myAcc != null)
+            acc = dbContext.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+
+            ViewBag.CurrentUser = acc;
+            ViewBag.Contacts = GetAllContact();
+
+            if (postID != "" && postID != null && acc != null)
             {
-                thisPost = db.Post.Find(Convert.ToInt32(postID));
+                thisPost = dbContext.Post.Find(Convert.ToInt32(postID));
                 return View(thisPost);
             }
             else
@@ -27,6 +31,23 @@ namespace TuHuTuHu.Controllers
                 return null;
             }
             
+        }
+
+        List<Account> GetAllContact()
+        {
+            List<Msg> messages = dbContext.Msg.Where(s => s.Account.AccID == acc.AccID || s.Account1.AccID == acc.AccID).ToList();
+            List<string> contactIDs = new List<string>();
+            foreach (var message in messages)
+            {
+                // Neu minh la nguoi gui thi lay id nguoi nhan va nguoc lai
+                if (message.Account.AccID == acc.AccID)
+                {
+                    contactIDs.Add(message.Account1.AccID.ToString());
+                }
+                else contactIDs.Add(message.Account.AccID.ToString());
+            }
+            List<Account> contacts = dbContext.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
+            return contacts;
         }
     }
 }

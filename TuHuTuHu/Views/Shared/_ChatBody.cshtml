@@ -1,0 +1,87 @@
+﻿
+
+<div id="chathead" onclick="closeChat()">
+    <a href="javascript:void(0)" onclick="chatheadClick()"><strong id="chatname"></strong></a>
+    <p id="chatheadID" hidden="hidden"></p>
+</div>
+
+<div id="chatbody">
+    @if (ViewBag.Chat != null)
+    {
+        foreach (var msg in ViewBag.Chat)
+        {
+            if (msg.SenderID == ViewBag.CurrentUser.AccID)
+            {
+                <div class="mymsg">
+                    <div class="mymsg-bg">
+                        @msg.Content
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="yourmsg">
+                    <img class="yourmsg-avt" src=@msg.Account1.AvtLink alt="">
+                    <div class="yourmsg-bg">
+                        @msg.Content
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<div class="chat-footer">
+    <form>
+        <textarea id="texting" name="texting" oninput="auto_grow_chat(this)" placeholder="Nhập tin nhắn..."></textarea>
+        <img id="sendimg" src="/Content/images/send.svg" alt="">
+        <input type="button" id="sendBtn" name="name" value="send" hidden="hidden"/>
+    </form>
+</div>
+
+
+
+<script>
+    $(function () {
+        // Reference the auto-generated proxy for the hub.
+        var chat = $.connection.chatHub;
+        // Create a function that the hub can call back to display messages.
+        chat.client.addMyMessageToPage = function (message) {
+            $('#chatbody').append('<div class="mymsg"><div class="mymsg-bg">' + message + '</div></div>');
+            $('#chatbody').animate({ "scrollTop": $('#chatbody')[0].scrollHeight }, 500);
+        };
+        chat.client.addYourMessageToPage = function (message, avtLink) {
+            $('#chatbody').append('<div class="yourmsg"><img class="yourmsg-avt" src=' + avtLink + ' alt=""><div class="yourmsg-bg">' + message + '</div></div>');
+            $('#chatbody').animate({ "scrollTop": $('#chatbody')[0].scrollHeight }, 500);
+        };
+        // Set initial focus to message input box.
+        $('#texting').focus();
+        // Start the connection.
+        window.hubReady.done(function () {
+            //alert("abc");
+            $('#sendBtn').click(function () {
+                // Call the Send method on the hub.
+                chat.server.send(@ViewBag.CurrentUser.AccID, $('#texting').val(), $('#chatheadID').html());
+                // Clear text box and reset focus for next comment.
+                $('#texting').val('').focus();
+                //alert("abc")
+            });
+        });
+    });
+
+    $('#texting').keypress(function (e) {
+        if (e.keyCode == 13 && !e.shiftKey) {
+            e.preventDefault();
+            $('#sendBtn').click();
+        }
+    });
+
+    $('#sendimg').click(function (e) {
+        $('#sendBtn').click();
+    });
+
+</script>
+
+@section scripts {
+
+}

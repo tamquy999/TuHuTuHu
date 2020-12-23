@@ -7,6 +7,7 @@ using TuHuTuHu.Models;
 
 namespace TuHuTuHu.Controllers
 {
+    [Authorize]
     public class SearchController : Controller
     {
         MyDBContext dbContext = new MyDBContext();
@@ -17,7 +18,7 @@ namespace TuHuTuHu.Controllers
         // GET: Search
         public ActionResult Index(string searchString)
         {
-            acc = dbContext.Account.Find(Convert.ToInt32(Session["userID"]));
+            acc = dbContext.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
 
             if (searchString == null)
             {

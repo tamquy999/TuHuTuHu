@@ -1,78 +1,39 @@
 ﻿
 @using TuHuTuHu.Models;
 
-@model TuHuTuHu.Models.Newfeed
+@model List<TuHuTuHu.Models.Post>
+
+@{
+    ViewBag.Title = "Newfeed";
+}
 
 <div class="posts">
     <div class="onYourMind">
         <div class="yourmind-textpart">
-            <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
-            <div id="postBtn" onclick="triggerPostButton()">Đăng</div>
+            <form action="/Base/UploadFile" enctype="multipart/form-data" method="post" style="width: 100%">
 
-            @using (Html.BeginForm("UploadFile",
-                    "Newfeed",
-                    FormMethod.Post,
-                    new { enctype = "multipart/form-data" }))
-            {
-                <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" style="display: none;" />
-                <button id="post-btn" type="submit" style="display: none">ádasdj</button>
+                <textarea name="yourMind" oninput="auto_grow(this)" placeholder="Bạn đang nghĩ gì..."></textarea>
+                <input id="file-input" type="file" name="file" onchange="loadImage(event)" accept="image/*" style="display:none" />
+                <button id="post-btn" type="submit" style="display:none"></button>
 
                 @ViewBag.Message
-            }
+            </form>
+
+            <div id="postBtn" onclick="triggerPostButton()">Đăng</div>
         </div>
         <div class="add-img-container">
-            <div class="listimg"></div>
+            <div class="output" id="output"></div>
             <div id="addimg-btn" onclick="triggerFileButton()">
             </div>
         </div>
     </div>
 
-    @foreach (Post post in Model.allPosts)
+    @foreach (Post post in Model)
     {
-        <div class="post">
-            <div class="post-info">
-                <a href=""><img class="post-avt" src=@post.Account.AvtLink></a>
-                <b><a class="post-name" href="">@post.Account.Fullname</a></b>
-                <a href=@Url.Action("Index", "Post", new { userID = post.Account.AccID, postID = post.PostID})>
-                    <div class="post-time">@post.CreatedAt.ToString()</div>
-                </a>
-            </div>
-            <div class="post-content">
-                <p class="post-text">@post.Content</p>
-            </div>
-            <div class="post-images">
-                <a href=@post.ImgLink data-lightbox="image-1" data-title=@post.Content><img class="post-img" src=@post.ImgLink alt=""></a>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-react">
-                <div class="love" onclick="LoveClick('@("love_" + post.PostID)')">
-                    <img class="love-icon" id=@("love_" + post.PostID) src="/Content/images/heart_line.svg" alt="">
-                    <p class="love-text" style="font-weight: 800">Thích <span style="font-weight: 200; font-size: 13px;">@post.Love.Count()</span> </p>
-                </div>
-                <div class="comment" onclick="CommentIcon_Click('@("comment_reply_" + post.PostID)')">
-                    <img class="comment-icon" id=@("comment_" + post.PostID) src="/Content/images/comment.svg" alt="">
-                    <p class="comment-text" style="font-weight: 800">Bình Luận <span style="font-weight: 200; font-size: 13px;">@post.Comment.Count()</span> </p>
-                </div>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-comments">
-                @foreach (var comment in post.Comment)
-                {
-                    <div class="post-cmt">
-                        <a href=""><img class="post-cmt-avt" src=@comment.Account.AvtLink></a>
-                        <div class="post-cmt-content">
-                            <b><a class="post-cmt-name" href="">@comment.Account.Fullname</a></b>
-                            <p class="post-cmt-text">@comment.Content</p>
-                        </div>
-                    </div>
-                }
-
-                <div class="post-cmt-reply">
-                    <img class="post-cmt-avt" src=@ViewBag.Account.AvtLink alt="">
-                    <textarea id=@("comment_reply_" + post.PostID) name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
-                </div>
-            </div>
-        </div>
-
+        @Html.Partial("_Post", post);
     }
+    <div id="clickedPost"></div>
 </div>
+
+<!-- Edit & Delete Modal -->
+@Html.Partial("_Modal")
