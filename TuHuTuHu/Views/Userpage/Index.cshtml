@@ -19,8 +19,8 @@
         <div class="userAvatarFrame">
             <!-- <img id="userAvatar" src="images/image.png" data-lightbox="image-1"> -->
             <!-- <a href="/images/image.png" data-lightbox="image-1">
-            <img class="uPost-img" src="images/image.png">
-        </a> -->
+                <img class="uPost-img" src="images/image.png">
+            </a> -->
             <a class="userAvatarLink" href=@Model.account.AvtLink data-lightbox="image-1">
                 <img class="userAvatar" src=@Model.account.AvtLink>
             </a>
@@ -38,22 +38,25 @@
         @if (Convert.ToInt32(Url.RequestContext.RouteData.Values["id"]) == ViewBag.CurrentUser.AccID)
         {
             <div id="btnEditProfile" class="open-EditPostDialog" href="#editUserInfoDialog" data-toggle="modal">Chỉnh sửa hồ sơ</div>
-            <li>@*<a id="editBtn" class="open-EditPostDialog" href="#editUserInfoDialog" data-toggle="modal">Sửa thoong tin</a>*@</li>
         }
         else
         {
+            // chat button
+            <button id="newConversationBtn" onclick="NewConversationClick()">Nhắn tin</button>
+
+
             //CurrentUser is me.
             //account is friend :D
             if (ViewBag.FollowedTheir != -1) //da theo doi
             {
-                <button class="btnFollowing2" id=@("followingBtn_" + ViewBag.FollowedTheir) 
+                <button class="btnFollowing2" id=@("followingBtn_" + ViewBag.FollowedTheir)
                         onclick="ReverseFollowingStateUserPage(@ViewBag.CurrentUser.AccID, @Convert.ToInt32(Url.RequestContext.RouteData.Values["id"]), @ViewBag.FollowedTheir)">
                     <span>Đang theo dõi</span>
                 </button>
             }
             else //chua theo doi
             {
-                <button class="btnFollow2" id=@("followingBtn_NONE") 
+                <button class="btnFollow2" id=@("followingBtn_NONE")
                         onclick="ReverseFollowingStateUserPage(@ViewBag.CurrentUser.AccID, @Convert.ToInt32(Url.RequestContext.RouteData.Values["id"]), @ViewBag.FollowedTheir)">
                     <span>Theo dõi</span>
                 </button>

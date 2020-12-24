@@ -17,10 +17,11 @@ namespace TuHuTuHu.Hubs
             cmt.PostID = postID;
             cmt.UserID = userID;
             cmt.Content = content;
+            cmt.CreatedAt = DateTime.Now;
 
             db.Comment.Add(cmt);
 
-            //db.SaveChanges();
+            db.SaveChanges();
 
             Account acc = db.Account.Where(s => s.AccID == userID).FirstOrDefault();
 

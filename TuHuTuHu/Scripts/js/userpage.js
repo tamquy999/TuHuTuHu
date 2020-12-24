@@ -52,3 +52,11 @@ function ReverseFollowingStateUserPage(myUserID, theirID, followID) {
         }
     });
 }
+
+// Bam nut nhan tin trong userpage
+function NewConversationClick() {
+    var url = window.location.pathname;
+    var id = url.substring(url.lastIndexOf('/') + 1);
+    //alert($("#userName").html() + " " + id);
+    openChat($("#userName").html(), id);
+}
