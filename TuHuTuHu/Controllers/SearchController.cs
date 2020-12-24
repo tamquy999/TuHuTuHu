@@ -16,20 +16,25 @@ namespace TuHuTuHu.Controllers
         // GET: Search
         public ActionResult Index(string searchString)
         {
+            //searchString = searchString.Trim();
+
             acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
 
+            List<Account> resultAccounts = db.Account.Where(x => x.Username.StartsWith(searchString)).ToList();
+            resultAccounts = resultAccounts.Union(db.Account.Where(x => x.Fullname.Contains(searchString)).ToList()).ToList();
 
 
 
             ViewBag.CurrentUser = acc;
             ViewBag.Contacts = GetAllContact();
+            ViewBag.countResult = resultAccounts.Count;
 
             ResultSearch result = new ResultSearch();
 
             result.account = acc;
+            result.resultAccounts = resultAccounts;
 
-
-            return View();
+            return View(result);
         }
 
         List<Account> GetAllContact()

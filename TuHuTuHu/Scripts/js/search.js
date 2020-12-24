@@ -5,3 +5,10 @@
         }
     });
 })
+
+
+function SearchText() {
+    var searchInput = document.getElementById('searchText').value;
+    searchInput = '/Search?searchString=' + searchInput;
+    window.location.href = searchInput;
+}

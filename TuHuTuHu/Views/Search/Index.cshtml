@@ -2,6 +2,52 @@
 @{
     ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
+@model TuHuTuHu.Models.ResultSearch
 
+@section AddToHead{
+    <link rel="stylesheet" href="~/Content/css/search.css">
+    <link rel="stylesheet" href="~/Content/css/lightbox.css">
+
+    <script src="~/Scripts/js/search.js"></script>
+
+}
+
+<!-- #region Search Main Frame -->
+
+<div class="searchMainFrame">
+    <div class="searchBox">
+        <textarea id="searchText" name="searchKey" rows="1" placeholder="Bạn muốn tìm gì?" onkeypress="onTestChange();"></textarea>
+        <div id="searchBtn" onclick="SearchText()">Tìm kiếm</div>
+    </div>
+
+    <div class="listSearchResult">
+        <div class="resultSearchHeader"></div>
+
+        @if (Model.resultAccounts.Count >= 1)
+        {
+            foreach (var item in Model.resultAccounts)
+            {
+                <div class="resultElement">
+                    <img src=@item.AvtLink class="contactavt">
+                    <a class="userNameResult" href=@("/Userpage/Index/"+item.AccID)>@item.Fullname</a>
+                    <a class="userIDResult" href=@("/Userpage/Index/"+item.AccID)>@item.Username</a>
+                </div>
+            }
+        }
+        else
+        {
+            <div>
+                <h2>Không tìm thấy kết quả phù hợp</h2>
+            </div>
+        }
+
+
+    </div>
+
+
+</div>
+
+<!--#endregion-->
