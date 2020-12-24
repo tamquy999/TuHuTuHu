@@ -11,9 +11,9 @@
     <script src="/Scripts/js/lightbox.js"></script>
 }
 
-@*@{
+@{
         ViewBag.Title = "Follow";
-    }*@
+    }
 
 <!--#region Main Follow-->
 <div class="userMainFrame">
@@ -32,7 +32,7 @@
         <a id="userName">@Model.account.Fullname</a>
         <a id="userID">@("@"+Model.account.Username)</a>
         <div id="dateOfJoin">
-            <img id="iconCalendar" src="images/calendar.svg">
+            <img id="iconCalendar" src="/Content/images/calendar.svg">
             <a id="textCalendar"> Đã tham gia từ tháng @Model.account.JoinDate.Value.Month năm @Model.account.JoinDate.Value.Year</a>
         </div>
         <div id="followCount">
@@ -55,11 +55,13 @@
             <div id="followingList" class="followTabContent">
                 @foreach (var _following in Model.following)
                 {
-                    <div class="elementOfFollowList" id="personID" onclick="window.location=@("/Userpage/Index/"+_following.UserID)">
+                    <div class="elementOfFollowList" id=@("ID_"+_following.FollowID) onclick="window.location=@("/Userpage/Index/"+_following.UserID)">
                         <img src=@_following.Account1.AvtLink class="avtUserFl">
                         <a class="userNameFl" href=@("/Userpage/Index/"+_following.UserID)>@_following.Account1.Fullname</a>
                         <a class="userIDFl" href=@("/Userpage/Index/"+_following.UserID)>@("@"+_following.Account1.Username)</a>
-                        <button class="btnFollowing" id="useID_followingBtn"><span>Đang theo dõi</span></button>
+                        <button class="btnFollowing" id=@("followingBtn_"+_following.FollowID) onclick="ReverseFollowingState(@Model.account.AccID, @_following.UserID, @_following.FollowID)">
+                        <span>Đang theo dõi</span>
+                        </button>
                     </div>
                 }
             </div>
@@ -71,7 +73,7 @@
                         <img src=@_followed.Account.AvtLink class="contactavt">
                         <a class="userNameFl" href=@("/Userpage/Index/"+_followed.FollowerID)>@_followed.Account.Fullname</a>
                         <a class="userIDFl" href=@("/Userpage/Index/"+_followed.FollowerID)>@("@"+_followed.Account.Username)</a>
-                        <button class="btnFollow" id="useID_followingBtn"><span>Theo dõi</span></button>
+                        <button class="btnFollow" id=@("followedBtn_"+_followed.FollowID.ToString()) onclick="ReverseFollowedState(@Model.account.AccID, @_followed.FollowerID, @_followed.FollowID) "><span>Theo dõi</span></button>
                     </div>
                 }
             </div>

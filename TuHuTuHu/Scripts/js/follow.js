@@ -34,5 +34,64 @@ function openFollowContent(event, nameOfContent) {
     document.getElementById(nameOfContent).style.display = "block";
     event.currentTarget.className += " active";
 
-    console.log(nameOfContent);
+}
+
+
+function ReverseFollowingState(myUserID, theirID, followID) {
+    $.ajax({
+        url: '/Follow/ReverseFollowingState',
+        type: 'GET',
+        dataType: 'json',
+        data: { myUserID: Number(myUserID), theirID: Number(theirID), followID: Number(followID) },
+        success: function (data) {
+            if (data == true) {
+                //Neu la o tab Dang Theo doi
+                    if ($('#followingBtn_' + followID).attr('class') == 'btnFollowing') {
+                        $('#followingBtn_' + followID).attr('class', 'btnFollow');
+                        $('#followingBtn_' + followID).html('<span>Theo dõi</span>');
+                    }
+                    else if ($('#followingBtn_' + followID).attr('class') == 'btnFollow') {
+                        $('#followingBtn_' + followID).attr('class', 'btnFollowing');
+                        $('#followingBtn_' + followID).html('<span>Đang theo dõi</span>');
+                    }
+            }
+            else {
+
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //some errror, some show err msg to user and log the error
+            alert(xhr.responseText);
+        }
+    });
+}
+
+
+
+function ReverseFollowedState(myUserID, theirID, followID) {
+    $.ajax({
+        url: '/Follow/ReverseFollowedState',
+        type: 'GET',
+        dataType: 'json',
+        data: { myUserID: Number(myUserID), theirID: Number(theirID), followID: Number(followID) },
+        success: function (data) {
+            if (data == true) {
+                    if ($('#followedBtn_' + followID).attr('class') == 'btnFollow') {
+                        $('#followedBtn_' + followID).attr('class', 'btnFollowed');
+                        $('#followedBtn_' + followID).html('<span>Đang theo dõi</span>');
+                    }
+                    else if ($('#followedBtn_' + followID).attr('class') == 'btnFollowed') {
+                        $('#followedBtn_' + followID).attr('class', 'btnFollow');
+                        $('#followedBtn_' + followID).html('<span>Theo dõi</span>');
+                    }
+            }
+            else {
+
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //some errror, some show err msg to user and log the error
+            alert(xhr.responseText);
+        }
+    });
 }
