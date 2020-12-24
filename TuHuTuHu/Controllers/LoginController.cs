@@ -8,7 +8,7 @@ using TuHuTuHu.Models;
 
 namespace TuHuTuHu.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         // GET: Login
         public ActionResult Index()
@@ -22,6 +22,7 @@ namespace TuHuTuHu.Controllers
             using (MyDBContext context = new MyDBContext())
             {
                 ViewBag.LoginMessage = null;
+                pass = HashPass(pass);
                 bool IsValidUser = context.Account.Any(s => s.Username.ToLower() ==
                      user && s.Pass == pass);
                 if (IsValidUser)
