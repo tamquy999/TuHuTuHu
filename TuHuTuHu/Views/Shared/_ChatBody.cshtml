@@ -50,9 +50,13 @@
             $('#chatbody').append('<div class="mymsg"><div class="mymsg-bg">' + message + '</div></div>');
             $('#chatbody').animate({ "scrollTop": $('#chatbody')[0].scrollHeight }, 500);
         };
-        chat.client.addYourMessageToPage = function (message, avtLink) {
+        chat.client.addYourMessageToPage = function (message, avtLink, accID, fullname) {
+            openChat(fullname, accID);
+
             $('#chatbody').append('<div class="yourmsg"><img class="yourmsg-avt" src=' + avtLink + ' alt=""><div class="yourmsg-bg">' + message + '</div></div>');
             $('#chatbody').animate({ "scrollTop": $('#chatbody')[0].scrollHeight }, 500);
+            //Hiện chấm thông báo
+            //ShowNewMsgDot();
         };
         // Set initial focus to message input box.
         $('#texting').focus();
@@ -64,7 +68,7 @@
                 chat.server.send(@ViewBag.CurrentUser.AccID, $('#texting').val(), $('#chatheadID').html());
                 // Clear text box and reset focus for next comment.
                 $('#texting').val('').focus();
-                //alert("abc")
+                //ToggleNewMsgDot();
             });
         });
     });

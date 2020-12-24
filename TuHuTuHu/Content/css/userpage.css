@@ -31,7 +31,7 @@
     left: 0;
     height: 300px;
     object-fit: cover;
-/*    border-radius: 15px 15px 0px 0px;*/
+    /*    border-radius: 15px 15px 0px 0px;*/
     box-shadow: 10px 10px 100px var(--main-sdw-color);
 }
 
@@ -42,6 +42,7 @@
     left: 0px;
     top: 0px;
     border-radius: 30px;
+    object-fit: cover;
 }
 
 .userAvatarLink {
@@ -96,7 +97,7 @@
     cursor: pointer;
     position: absolute;
     background-color: var(--main-bg-color);
-    top: 310px;
+    top: 60%;
     width: 120px;
     right: 30px;
     height: 30px;
@@ -262,7 +263,7 @@
     background-color: var(--main-bg-color);
     height: 30px;
     width: 25%;
-    border-radius: 30px;
+    border-radius: 10px;
     border: 1px solid var(--main-fg-color);
     top: 60%;
     left: 70%;
@@ -271,19 +272,19 @@
     font-weight: normal;
 }
 
-.btnFollow2:hover span {
-    display: none;
-}
+    .btnFollow2:hover span {
+        display: none;
+    }
 
-.btnFollow2:hover:before {
-    content: "Theo dõi";
-    font-weight: normal;
-}
+    .btnFollow2:hover:before {
+        content: "Theo dõi";
+        font-weight: normal;
+    }
 
-.btnFollow2:hover {
-    background-color: var(--main-fg-color);
-    color: white;
-}
+    .btnFollow2:hover {
+        background-color: var(--main-fg-color);
+        color: white;
+    }
 
 /*BtnFollowing dùng cho những người mình đang theo dõi*/
 
@@ -292,7 +293,7 @@
     background-color: var(--main-fg-color);
     height: 30px;
     width: 25%;
-    border-radius: 30px;
+    border-radius: 10px;
     border: none;
     top: 60%;
     left: 70%;
@@ -302,15 +303,39 @@
     content: "Đang theo dõi";
 }
 
-.btnFollowing2:hover span {
-    display: none;
-}
+    .btnFollowing2:hover span {
+        display: none;
+    }
 
-.btnFollowing2:hover:before {
-    content: "Ngừng theo dõi";
+    .btnFollowing2:hover:before {
+        content: "Ngừng theo dõi";
+        font-weight: normal;
+    }
+
+    .btnFollowing2:hover {
+        background-color: red;
+    }
+
+#newConversationBtn {
+    position: absolute;
+    background-color: var(--main-bg-color);
+    height: 30px;
+    width: 15%;
+    border-radius: 10px;
+    border: 1px solid var(--main-fg-color);
+    top: 60%;
+    left: 53%;
+    color: var(--main-fg-color);
+    outline: none;
     font-weight: normal;
 }
 
-.btnFollowing2:hover {
-    background-color: red;
-}
+    #newConversationBtn:hover {
+        background-color: #eaf8ff;
+        box-shadow: 5px 5px 20px var(--main-sdw-color);
+    }
+
+    #newConversationBtn:active {
+        background-color: #c4ecff;
+        box-shadow: 5px 2px 5px var(--main-sdw-color);
+    }

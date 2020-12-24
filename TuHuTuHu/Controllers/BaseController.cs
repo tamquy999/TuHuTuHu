@@ -161,8 +161,8 @@ namespace TuHuTuHu.Controllers
                 {
                     sb.Append(hashBytes[i].ToString("X2"));
                 }
-                //return sb.ToString();
-                return pass;
+                return sb.ToString();
+                //return pass;
             }
         }
     }
