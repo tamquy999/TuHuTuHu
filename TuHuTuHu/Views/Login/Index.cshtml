@@ -28,12 +28,14 @@
                 <input type="password" id="pass" name="pass" placeholder="Mật khẩu..." required>
                 <input type="submit" id="login" name="login" value="Đăng nhập">
             </form>
+            @*<a id="message">@ViewBag.LoginMessage</a>*@
             <div class="doesnt-have-acc">
                 <p>Bạn chưa có tài khoản?</p>
                 <p>&nbsp</p>
                 <div id="signup-ask" onclick="SignupClick()">Đăng ký</div>
             </div>
-            <a id="forgot-pass" href="">Quên mật khẩu?</a>
+            <a id="forgot-pass" onclick="ForgetPassClick()">Quên mật khẩu?</a>
+
         </div>
         <div class="signup-container">
             <img class="logo" src="/Content/images/Logo.png" alt="">
@@ -44,12 +46,35 @@
                 <input type="password" id="pass" name="pass" placeholder="Mật khẩu..." required>
                 <input type="submit" id="signup" name="signup" value="Đăng kí">
             </form>
+            @*<a id="message">@ViewBag.SignupMessage</a>*@
             <div class="does-have-acc">
                 <p>Bạn đã có tài khoản?</p>
                 <p>&nbsp</p>
                 <div id="login-ask" onclick="LoginClick()">Đăng nhập</div>
             </div>
-            <a id="forgot-pass" href="">Quên mật khẩu?</a>
+            <a id="forgot-pass" onclick="ForgetPassClick()">Quên mật khẩu?</a>
+            
+        </div>
+        <div class="forget-pass-container">
+            <img class="logo" src="/Content/images/Logo.png" alt="">
+            <form class="form" action=@Url.Action("ForgetPass", "Login") method="post">
+                @Html.AntiForgeryToken()
+                <input type="text" id="user" name="user" placeholder="Tài khoản..." required>
+                <input type="password" id="pass" name="newpass1" placeholder="Mật khẩu mới" required>
+                <input type="password" id="pass" name="newpass2" placeholder="Nhập lại mật khẩu" required>
+                @*<input type="text" id="user" name="OTP" placeholder="Nhập mã xác minh (tuhutuhu)" required>*@
+                <input type="submit" id="forget" name="forget" value="Đổi mật khẩu">
+            </form>
+
+            <a id="message">@ViewBag.ForgetMessage</a>
+
+            <div class="does-forget-acc">
+                <p>Bạn đã có tài khoản?</p>
+                <p>&nbsp</p>
+                <div id="login-ask" onclick="LoginClick()">Đăng nhập</div>
+            </div>
+            <a id="forgot-pass2" href="">Quên mật khẩu?</a>
+
         </div>
     </div>
 
