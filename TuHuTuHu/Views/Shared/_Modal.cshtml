@@ -50,15 +50,12 @@
                 <strong></strong>
                 <h4 class="modal-title" id="editUserInfoModalLabel"><strong>Sửa thông tin cá nhân</strong></h4>
             </div>
-            <form id="changeUserInfoForm" action="/Userpage/EditUserInfo" enctype="multipart/form-data" method="post" oninput='retypePwd.setCustomValidity(retypePwd.value != newPwd.value ? "Nhập lại mật khẩu không khớp" : "")'>
+            <form id="changeUserInfoForm" action="/Userpage/EditUserInfo" enctype="multipart/form-data" method="post">
                 <div class="modal-body" style="padding: 20px 75px 20px 50px">
                     * Để trống trường không muốn thay đổi<br><br>
                     <div class="form-group">
                         <label for="fullname">Họ và tên</label>
                         <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Họ và tên">
-                        <br />
-                        <label for="oldPwd">Mật khẩu cũ</label>
-                        <input type="password" class="form-control" name="oldPwd" id="oldPwd" placeholder="Mật khẩu cũ">
                         <br />
                         <label for="newPwd">Mật khẩu mới</label>
                         <input type="password" class="form-control" name="newPwd" id="newPwd" placeholder="Mật khẩu mới">
@@ -67,39 +64,55 @@
                         <input type="password" class="form-control" name="retypePwd" id="retypePwd" placeholder="Nhập lại mật khẩu">
                         <br />
                         <label for="newAvt">Ảnh đại diện</label>
-                        <input type="file" class="form-control-file" id="newAvt">
+                        <input type="file" class="form-control-file" name="newAvt" id="newAvt">
                         <br />
                         <label for="newCover">Ảnh bìa</label>
-                        <input type="file" class="form-control-file" id="newCover">
+                        <input type="file" class="form-control-file" name="newCover" id="newCover">
+                        <br />
+                        <label for="oldPwd">Xác nhận mật khẩu</label>
+                        <input type="password" class="form-control" name="oldPwd" id="oldPwd" placeholder="Mật khẩu cũ" oninvalid="this.setCustomValidity('Vui lòng nhập mật khẩu để xác nhận')" required>
+                        <br />
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
-                    <button type="submit" id="changeInfoSubmitBtn" class="btn btn-success">Lưu</button>
+                    <button type="button" id="changeInfoSubmitBtn" class="btn btn-success">Lưu</button>
+                    <button type="submit" id="changeInfoSubmit" hidden="hidden"></button>
                     <script>
-                        $('#changeUserInfoForm').on('submit', function (e) {
-                            e.preventDefault();
+                        $('#changeInfoSubmitBtn').click(function (e) {
+                            
                             pwd = $("#oldPwd").val();
-                            $.ajax({
-                                url: '/Base/PassCheck',
-                                type: 'GET',
-                                dataType: 'json',
-                                data: { pwd: pwd },
-                                success: function (data) {
-                                    if (data == false) {
-                                        alert("Mật khẩu cũ không đúng");
-                                    }
-                                    else {
-                                        console.log("dung");
-                                        $('#changeUserInfoForm').submit();
-                                    }
-                                },
-                                error: function (xhr, ajaxOptions, thrownError) {
-                                    //some errror, some show err msg to user and log the error
-                                    alert(xhr.responseText);
+                            newPwd = $("#newPwd").val();
+                            retypePwd = $("#retypePwd").val();
 
-                                }
-                            });
+                            if (newPwd != retypePwd) {
+                                alert("Mật khẩu nhập lại không khớp");
+                                return;
+                            }
+
+                            if (pwd == "") {
+                                $('#changeInfoSubmit').click();
+                            }
+                            else {
+                                $.ajax({
+                                    url: '/Base/PassCheck',
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    data: { pwd: pwd },
+                                    success: function (data) {
+                                        if (data == true) {
+                                            $('#changeUserInfoForm').submit();
+                                        }
+                                        else {
+                                            alert("Mật khẩu xác nhận sai")
+                                        }
+                                    },
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        //some errror, some show err msg to user and log the error
+                                        alert(xhr.responseText);
+                                    }
+                                });
+                            }
                         });
                     </script>
                 </div>

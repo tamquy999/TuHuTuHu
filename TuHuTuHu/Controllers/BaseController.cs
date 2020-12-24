@@ -74,6 +74,10 @@ namespace TuHuTuHu.Controllers
                 {
                     var filename = DateTime.Now.Ticks.ToString() + System.IO.Path.GetExtension(file.FileName);
                     string path = Path.Combine(Server.MapPath("~/UploadedFiles"), filename);
+                    if (!Directory.Exists(Server.MapPath("~/UploadedFiles")))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/UploadedFiles"));
+                    }
                     file.SaveAs(path);
                     ViewBag.Message = "File uploaded successfully";
 
