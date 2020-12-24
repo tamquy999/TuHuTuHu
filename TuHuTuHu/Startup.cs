@@ -15,7 +15,7 @@ namespace TuHuTuHu
         {
             var idProvider = new CustomUserIdProvider();
 
-            GlobalHost.DependencyResolver.Register(typeof(IUserIdProvider), () => idProvider);
+            GlobalHost.DependencyResolver.Register(typeof(IUserIdProvider), () =>idProvider);
 
             app.MapSignalR();
         }

@@ -23,8 +23,8 @@
         <div class="userAvatarFrame">
             <!-- <img id="userAvatar" src="images/image.png" data-lightbox="image-1"> -->
             <!-- <a href="/images/image.png" data-lightbox="image-1">
-                <img class="uPost-img" src="images/image.png">
-            </a> -->
+            <img class="uPost-img" src="images/image.png">
+        </a> -->
             <a class="userAvatarLink" href=@Model.account.AvtLink data-lightbox="image-1">
                 <img class="userAvatar" src=@Model.account.AvtLink>
             </a>
@@ -39,7 +39,10 @@
             <a id="countFollowMe"><b id="numFollowing">@Model.countFollowing</b> Đang theo dõi</a>
             <a id="countMeFollowed"><b id="numFollowed">@Model.countFollower</b> Người theo dõi</a>
         </div>
-        <div id="btnEditProfile">Chỉnh sửa hồ sơ</div>
+        @if (Convert.ToInt32(Url.RequestContext.RouteData.Values["id"]) == ViewBag.CurrentUser.AccID)
+        {
+            <div id="btnEditProfile">Chỉnh sửa hồ sơ</div>
+        }
 
     </div>
 

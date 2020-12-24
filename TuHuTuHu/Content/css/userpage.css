@@ -93,6 +93,7 @@ body {
 }
 
 #btnEditProfile {
+    cursor: pointer;
     position: absolute;
     background-color: var(--main-bg-color);
     top: 310px;

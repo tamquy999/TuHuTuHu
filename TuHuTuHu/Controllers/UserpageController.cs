@@ -8,30 +8,28 @@ using TuHuTuHu.Models;
 namespace TuHuTuHu.Controllers
 {
     [Authorize]
-    public class UserpageController : Controller
+    public class UserpageController : BaseController
     {
-        MyDBContext dbContext = new MyDBContext();
-        Account acc = new Account();
 
         // GET: Userpage
         public ActionResult Index(int id)
         {
-            acc = dbContext.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
 
             ViewBag.CurrentUser = acc;
             ViewBag.Contacts = GetAllContact();
 
             Userpage userpage = new Userpage();
 
-            userpage.account = dbContext.Account.Find(id);
-            userpage.posts = dbContext.Post.Where(s => s.UserID == id).ToList();
+            userpage.account = db.Account.Find(id);
+            userpage.posts = db.Post.Where(s => s.UserID == id).ToList();
 
             return View(userpage);
         }
 
         List<Account> GetAllContact()
         {
-            List<Msg> messages = dbContext.Msg.Where(s => s.Account.AccID == acc.AccID || s.Account1.AccID == acc.AccID).ToList();
+            List<Msg> messages = db.Msg.Where(s => s.Account.AccID == acc.AccID || s.Account1.AccID == acc.AccID).ToList();
             List<string> contactIDs = new List<string>();
             foreach (var message in messages)
             {
@@ -42,8 +40,25 @@ namespace TuHuTuHu.Controllers
                 }
                 else contactIDs.Add(message.Account.AccID.ToString());
             }
-            List<Account> contacts = dbContext.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
+            List<Account> contacts = db.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
             return contacts;
+        }
+
+        public ActionResult EditUserInfo(string fullname, string newPwd)
+        {
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+            if (fullname != "")
+            {
+                acc.Fullname = fullname;
+            }
+            if (newPwd != "")
+            {
+                acc.Pass = HashPass(newPwd);
+            }
+
+            db.SaveChanges();
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
     }

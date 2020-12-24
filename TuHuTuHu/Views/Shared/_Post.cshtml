@@ -51,29 +51,11 @@
     </div>
     <div class="sep-line"></div>
 
-    @*<div class="post-comments">
-            @foreach (var comment in Model.Comment)
-            {
-                <div class="post-cmt">
-                    <a href=""><img class="post-cmt-avt" src=@comment.Account.AvtLink></a>
-                    <div class="post-cmt-content">
-                        <b><a class="post-cmt-name" href=@Url.Action("Index", "Userpage", new { id = comment.Account.AccID})>@comment.Account.Fullname</a></b>
-                        <p class="post-cmt-text">@comment.Content</p>
-                    </div>
-                </div>
-            }
-
-            <div class="post-cmt-reply">
-                <img class="post-cmt-avt" src=@ViewBag.CurrentUser.AvtLink alt="">
-                <textarea id=@("comment_reply_" + Model.PostID) class="txtComment" name="cmt-reply" oninput="auto_grow(this)" placeholder="Viết bình luận..."></textarea>
-            </div>
-        </div>*@
-
     @Html.Partial("_Comments", Model)
 
-
-
 </div>
+
+
 @*<script>
     $(function () { window.hubReady = $.connection.hub.start(); });
 </script>*@
