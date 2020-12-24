@@ -1,4 +1,6 @@
-﻿@model TuHuTuHu.Models.Userpage
+﻿@using TuHuTuHu.Models;
+
+@model TuHuTuHu.Models.Userpage
 
 @section AddToHead{
     <link rel="stylesheet" href="/Content/css/userpage.css">
@@ -89,38 +91,9 @@
 
     <!--Old Posts here-->
 
-    @foreach (var post in Model.posts)
+    @foreach (Post post in Model.posts)
     {
-        <div class="post">
-            <div class="post-info">
-                <img class="post-avt" src=@post.Account.AvtLink>
-                <b><a class="post-name" href="">@post.Account.Fullname</a></b>
-                <div class="post-time">@post.CreatedAt</div>
-            </div>
-            <div class="post-content">
-                <p class="post-text">@post.Content</p>
-            </div>
-            <div class="post-images">
-                <a href=@post.ImgLink data-lightbox="image-1" data-title="@post.Content">
-                    <img class="post-img" src=@post.ImgLink alt="">
-                </a>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-react">
-                <div class="love" onclick="LoveClick()">
-                    <img class="love-icon" src="/Content/images/heart_line.svg" alt="">
-                    <b><p class="love-text">Thích <span style="font-weight: 100; font-size: 13px;">@post.Love.Count()</span> </p></b>
-                </div>
-                <div class="comment">
-                    <img class="comment-icon" src="/Content/images/comment.svg" alt="">
-                    <b><p class="comment-text">Bình Luận <span style="font-weight: 100; font-size: 13px;">@post.Comment.Count()</span> </p></b>
-                </div>
-            </div>
-            <div class="sep-line"></div>
-            <div class="post-comments">
-
-            </div>
-        </div>
+        @Html.Partial("_Post", post);
     }
 
 </div>
