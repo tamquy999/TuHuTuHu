@@ -147,7 +147,7 @@ input[name="searchbar"] {
     width: 350px;
     height: 100vh;
     background-color: var(--sub-bg-color);
-/*    overflow: hidden;*/
+    overflow: hidden;
     transition: 300ms ease-out;
 }
 
@@ -802,7 +802,6 @@ textarea[name="texting"] {
     }
     #usrcover {
         background-image: none;
-        left: -260px;
     }
     #usravt {
         border-radius: 20px;
