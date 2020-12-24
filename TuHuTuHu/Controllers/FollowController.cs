@@ -10,22 +10,45 @@ namespace TuHuTuHu.Controllers
     [Authorize]
     public class FollowController : BaseController
     {
-        
+
         Account acc = new Account();
 
         // GET: Follow
         public ActionResult Index()
         {
             acc = base.db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
-            
+
             ViewBag.CurrentUser = acc;
             ViewBag.Contacts = GetAllContact();
 
             FollowPage followpage = new FollowPage();
 
             followpage.account = acc;
-            followpage.follower = db.Follow.Where(s => s.UserID == acc.AccID).ToList();
+
+            //List Follower của mình:
+            List<Follow> _follower = db.Follow.Where(s => s.UserID == acc.AccID).ToList();
+
             followpage.following = db.Follow.Where(s => s.FollowerID == acc.AccID).ToList();
+
+            //List những follower mình có follow ngược lại
+            List<Follow> ListFollowerMinhCoFollowLai = new List<Follow>();
+
+            foreach (Follow itemER in _follower.ToList())
+            {
+                foreach (Follow itemING in followpage.following.ToList())
+                {
+                    if (itemER.FollowerID == itemING.UserID)
+                    {
+                        ListFollowerMinhCoFollowLai.Add(itemER);
+                        _follower.Remove(itemER);
+                    }
+                }
+            }
+
+
+            followpage.follower = _follower;
+
+            ViewBag.ListFollowerDaFollowLai = ListFollowerMinhCoFollowLai;
 
             followpage.countFollower = db.Follow.Count(s => s.UserID == acc.AccID);
             followpage.countFollowing = db.Follow.Count(s => s.FollowerID == acc.AccID);
@@ -58,7 +81,7 @@ namespace TuHuTuHu.Controllers
             {
                 List<Follow> thisFollowRow = base.db.Follow.Where(s => s.FollowerID == myUserID && s.UserID == theirID).ToList();
 
-                if(thisFollowRow.Count == 0)
+                if (thisFollowRow.Count == 0)
                 {
                     Follow temp = new Follow();
                     temp.UserID = theirID;
@@ -68,7 +91,7 @@ namespace TuHuTuHu.Controllers
                 }
                 else
                 {
-                    foreach(var temp in thisFollowRow)
+                    foreach (var temp in thisFollowRow)
                     {
                         base.db.Follow.Remove(temp);
                         db.SaveChanges();

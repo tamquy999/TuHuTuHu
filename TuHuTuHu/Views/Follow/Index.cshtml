@@ -12,8 +12,8 @@
 }
 
 @{
-        ViewBag.Title = "Follow";
-    }
+    ViewBag.Title = "Follow";
+}
 
 <!--#region Main Follow-->
 <div class="userMainFrame">
@@ -23,8 +23,8 @@
         <div class="userAvatarFrame">
             <!-- <img id="userAvatar" src="images/image.png" data-lightbox="image-1"> -->
             <!-- <a href="/images/image.png" data-lightbox="image-1">
-            <img class="uPost-img" src="images/image.png">
-        </a> -->
+                <img class="uPost-img" src="images/image.png">
+            </a> -->
             <a class="userAvatarLink" href=@Model.account.AvtLink data-lightbox="image-1">
                 <img class="userAvatar" src=@Model.account.AvtLink>
             </a>
@@ -60,20 +60,29 @@
                         <a class="userNameFl" href=@("/Userpage/Index/"+_following.UserID)>@_following.Account1.Fullname</a>
                         <a class="userIDFl" href=@("/Userpage/Index/"+_following.UserID)>@("@"+_following.Account1.Username)</a>
                         <button class="btnFollowing" id=@("followingBtn_"+_following.FollowID) onclick="ReverseFollowingState(@Model.account.AccID, @_following.UserID, @_following.FollowID)">
-                        <span>Đang theo dõi</span>
+                            <span>Đang theo dõi</span>
                         </button>
                     </div>
                 }
             </div>
 
             <div id="followedList" class="followTabContent">
+                @foreach (var item in ViewBag.ListFollowerDaFollowLai)
+                {
+                    <div class="elementOfFollowList" id="personID" onclick="window.location=@("/Userpage/Index/" + item.FollowerID)">
+                        <img src=@item.Account.AvtLink class="contactavt">
+                        <a class="userNameFl" href=@("/Userpage/Index/" + item.FollowerID)>@item.Account.Fullname</a>
+                        <a class="userIDFl" href=@("/Userpage/Index/" + item.FollowerID)>@("@" + item.Account.Username)</a>
+                        <button class="btnFollowed" id=@("followedBtn_" + item.FollowID.ToString()) onclick="ReverseFollowedState(@Model.account.AccID, @item.FollowerID, @item.FollowID) "><span>Đang theo dõi</span></button>
+                    </div>
+                }
                 @foreach (var _followed in Model.follower)
                 {
-                    <div class="elementOfFollowList" id="personID" onclick="window.location=@("/Userpage/Index/"+_followed.FollowerID)">
+                    <div class="elementOfFollowList" id="personID" onclick="window.location=@("/Userpage/Index/" + _followed.FollowerID)">
                         <img src=@_followed.Account.AvtLink class="contactavt">
-                        <a class="userNameFl" href=@("/Userpage/Index/"+_followed.FollowerID)>@_followed.Account.Fullname</a>
-                        <a class="userIDFl" href=@("/Userpage/Index/"+_followed.FollowerID)>@("@"+_followed.Account.Username)</a>
-                        <button class="btnFollow" id=@("followedBtn_"+_followed.FollowID.ToString()) onclick="ReverseFollowedState(@Model.account.AccID, @_followed.FollowerID, @_followed.FollowID) "><span>Theo dõi</span></button>
+                        <a class="userNameFl" href=@("/Userpage/Index/" + _followed.FollowerID)>@_followed.Account.Fullname</a>
+                        <a class="userIDFl" href=@("/Userpage/Index/" + _followed.FollowerID)>@("@" + _followed.Account.Username)</a>
+                        <button class="btnFollow" id=@("followedBtn_" + _followed.FollowID.ToString()) onclick="ReverseFollowedState(@Model.account.AccID, @_followed.FollowerID, @_followed.FollowID) "><span>Theo dõi</span></button>
                     </div>
                 }
             </div>
