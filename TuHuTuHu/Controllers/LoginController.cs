@@ -57,7 +57,7 @@ namespace TuHuTuHu.Controllers
                     Account acc = new Account();
                     acc.Username = user;
                     acc.Fullname = fullname;
-                    acc.Pass = pass;
+                    acc.Pass = HashPass(pass);
                     acc.JoinDate = DateTime.Now;
                     acc.AvtLink = "/Content/images/avatar.png";
                     acc.CoverLink = "/Content/images/usrcover.jpg";
