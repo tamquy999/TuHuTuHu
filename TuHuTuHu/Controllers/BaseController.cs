@@ -132,5 +132,20 @@ namespace TuHuTuHu.Controllers
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult PassCheck(string pwd)
+        {
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+            if (acc.Pass.Trim() == HashPass(pwd))
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public string HashPass(string pass)
+        {
+            return pass;
+        }
     }
 }

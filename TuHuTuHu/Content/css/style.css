@@ -352,6 +352,7 @@ textarea[name="yourMind"] {
 }
 
 #postBtn {
+    cursor: pointer;
     margin: 20px 20px 20px 0px;
     background-color: var(--main-fg-color);
     height: 50px;
@@ -401,6 +402,7 @@ textarea[name="yourMind"] {
 }
 
 #addimg-btn {
+    cursor: pointer;
     height: 100px;
     width: 100px;
     background-color: var(--sub-bg-color);

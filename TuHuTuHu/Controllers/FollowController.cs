@@ -17,7 +17,7 @@ namespace TuHuTuHu.Controllers
         public ActionResult Index()
         {
             acc = base.db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
-
+            
             ViewBag.CurrentUser = acc;
             ViewBag.Contacts = GetAllContact();
 
