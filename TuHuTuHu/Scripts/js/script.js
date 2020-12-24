@@ -1,5 +1,16 @@
 ﻿var customScroll;
 
+function animationsTest(callback) {
+    // Test if ANY/ALL page animations are currently active
+
+    var testAnimationInterval = setInterval(function () {
+        if (!$.timers.length) { // any page animations finished
+            clearInterval(testAnimationInterval);
+            callback();
+        }
+    }, 25);
+};
+
 // function Init() {
 //     customScroll = new slimScroll(document.getElementById('contacts'));
 //     window.onresize = customScroll.resetValues;
@@ -30,6 +41,8 @@ function chatheadClick() {
 
 // Open chat bubble
 function anotherOpenChat() {
+    HideNewMsgDot();
+
     var chatbox = document.getElementById('chatbox');
     chatbox.style.height = '450px';
     chatbox.style.width = '330px';
@@ -44,6 +57,8 @@ function anotherOpenChat() {
     $('#btn-bubble').hide();
 }
 function openChat(fullName, accID) {
+
+    HideNewMsgDot();
 
     $.ajax({
         url: '/Base/LoadConversation',
@@ -259,3 +274,21 @@ $(document).on("click", ".open-EditUserInfoDialog", function (e) {
 
     $(_self.attr('href')).modal('show');
 });
+
+
+// Hien thong bao tin nhan
+function ShowNewMsgDot() {
+    accID = $('#chatheadID').html();
+    $("#msg-dot-" + accID).show();
+}
+function HideNewMsgDot() {
+    accID = $('#chatheadID').html();
+    $("#msg-dot-" + accID).hide();
+}
+function ToggleNewMsgDot() {
+    accID = $('#chatheadID').html();
+    if ($("#msg-dot-" + accID).css("display") == "none") {
+        $("#msg-dot-" + accID).show();
+    }
+    else $("#msg-dot-" + accID).hide();
+}

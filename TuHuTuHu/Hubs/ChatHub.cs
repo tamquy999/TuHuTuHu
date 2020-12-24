@@ -25,7 +25,7 @@ namespace TuHuTuHu.Hubs
 
             var acc = db.Account.Where(s => s.Username == Context.User.Identity.Name).FirstOrDefault();
 
-            Clients.User(receiverID).addYourMessageToPage(message, acc.AvtLink);
+            Clients.User(receiverID).addYourMessageToPage(message, acc.AvtLink, acc.AccID, acc.Fullname);
             Clients.User(userID).addMyMessageToPage(message);
         }
     }
