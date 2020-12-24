@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -15,6 +16,25 @@ namespace TuHuTuHu.Controllers
         { 
             return View();
         }
+
+        private string HashPass(string pass)
+        {
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(pass);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                //return sb.ToString();
+                return pass;
+            }
+        }
+
 
         [HttpPost]
         public ActionResult Index(string user, string pass)
@@ -69,6 +89,28 @@ namespace TuHuTuHu.Controllers
                 }
 
                 ViewBag.SignupMessage = "Đăng ký không thành công. Vui lòng thử lại.";
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ForgetPass(string user, string newpass1, string newpass2)
+        {
+            using(MyDBContext context = new MyDBContext())
+            {
+                ViewBag.ForgetMessage = null;
+                Account acc = context.Account.Where(s => s.Username == user).FirstOrDefault();
+
+                if (acc != null && newpass1 == newpass2)
+                {
+                    acc.Pass = HashPass(newpass1);
+                    context.SaveChanges();
+                    ViewBag.SignupMessage = "Đổi mật khẩu thành công.";
+                    FormsAuthentication.SetAuthCookie(acc.Username, true);
+                    return RedirectToAction("Index", "Newfeed");
+                }
+
+                ViewBag.ForgetMessage = "Quên mật khẩu không thành công. Vui lòng thử lại.";
                 return View();
             }
         }

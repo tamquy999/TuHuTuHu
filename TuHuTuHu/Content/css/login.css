@@ -112,7 +112,8 @@ a {
 }
 
 #signup,
-#login {
+#login,
+#forget{
     cursor: pointer;
     background-color: var(--main-fg-color);
     border: none;
@@ -127,12 +128,17 @@ a {
 }
 
 #signup:active,
-#login:active {
+#login:active,
+#forget:active{
     background-color: #0095a8;
 }
 
 #forgot-pass {
     margin-left: 145px
+}
+
+#forgot-pass2 {
+    margin-left: 335px
 }
 
 .doesnt-have-acc,
@@ -144,8 +150,20 @@ a {
     transform: translate(-50%); */
 }
 
+.does-forget-acc {
+    display: flex;
+    margin-top: 30px;
+    margin-left: 290px;
+}
+
 #signup-ask,
 #login-ask {
+    cursor: pointer;
+    color: blue;
+}
+
+#forgot-pass2,
+#forgot-pass {
     cursor: pointer;
     color: blue;
 }
@@ -161,3 +179,4 @@ a {
         left: 0;
     }
 }
+

@@ -1,5 +1,6 @@
 function Init() {
     $('.signup-container').hide();
+    $('.forget-pass-container').hide();
 }
 
 // Sign up ask click
@@ -16,6 +17,9 @@ function SignupClick() {
     $('.logo').css('margin-bottom', '10px');
     $('.does-have-acc').css('margin-top', '20px');
     $('#realname, #username, #password').css('margin-top', '2px');
+
+    $('.forget-pass-container').hide();
+    $('.image').show();
 }
 
 // login ask click
@@ -31,4 +35,19 @@ function LoginClick() {
     $('.logo').css('margin-top', '50px');
     $('.does-have-acc').css('margin-top', '30px');
     $('#realname, #username, #password').css('margin-top', '10px');
+
+    $('.forget-pass-container').hide();
+    $('.image').show();
+}
+
+function ForgetPassClick() {
+    $('.login-container').hide();
+    $('.signup-container').hide();
+    $('.image').hide();
+
+    $('.logo').css('margin-top', '30px');
+
+    $('.forget-pass-container').show();
+
+    
 }
