@@ -2,6 +2,9 @@
 
 @section AddToHead{
     <link rel="stylesheet" href="/Content/css/userpage.css">
+
+    <script src="/Scripts/js/follow.js"></script>
+    <script src="/Scripts/js/userpage.js"></script>
 }
 
 @{
@@ -29,13 +32,32 @@
             <a id="textCalendar"> Đã tham gia từ tháng @Model.account.JoinDate.Value.Month năm @Model.account.JoinDate.Value.Year</a>
         </div>
         <div id="followCount">
-            <a id="countFollowMe"><b id="numFollowing">1610</b> Đang theo dõi</a>
-            <a id="countMeFollowed"><b id="numFollowed">221199</b> Người theo dõi</a>
+            <a id="countFollowMe"><b id="numFollowing">@ViewBag.countFollowed</b> Đang theo dõi</a>
+            <a id="countMeFollowed"><b id="numFollowed">@ViewBag.countFollower</b> Người theo dõi</a>
         </div>
         @if (Convert.ToInt32(Url.RequestContext.RouteData.Values["id"]) == ViewBag.CurrentUser.AccID)
         {
             <div id="btnEditProfile" class="open-EditPostDialog" href="#editUserInfoDialog" data-toggle="modal">Chỉnh sửa hồ sơ</div>
             <li>@*<a id="editBtn" class="open-EditPostDialog" href="#editUserInfoDialog" data-toggle="modal">Sửa thoong tin</a>*@</li>
+        }
+        else
+        {
+            //CurrentUser is me.
+            //account is friend :D
+            if (ViewBag.FollowedTheir != -1) //da theo doi
+            {
+                <button class="btnFollowing2" id=@("followingBtn_" + ViewBag.FollowedTheir) 
+                        onclick="ReverseFollowingStateUserPage(@ViewBag.CurrentUser.AccID, @Convert.ToInt32(Url.RequestContext.RouteData.Values["id"]), @ViewBag.FollowedTheir)">
+                    <span>Đang theo dõi</span>
+                </button>
+            }
+            else //chua theo doi
+            {
+                <button class="btnFollow2" id=@("followingBtn_NONE") 
+                        onclick="ReverseFollowingStateUserPage(@ViewBag.CurrentUser.AccID, @Convert.ToInt32(Url.RequestContext.RouteData.Values["id"]), @ViewBag.FollowedTheir)">
+                    <span>Theo dõi</span>
+                </button>
+            }
         }
 
     </div>
