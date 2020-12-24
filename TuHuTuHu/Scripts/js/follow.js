@@ -37,15 +37,15 @@ function openFollowContent(event, nameOfContent) {
 }
 
 
-function ReverseFollowState(myUserID, theirID, followID, whereTab) {
+function ReverseFollowingState(myUserID, theirID, followID) {
     $.ajax({
-        url: '/Follow/ReverseFollowState',
+        url: '/Follow/ReverseFollowingState',
         type: 'GET',
         dataType: 'json',
-        data: { myUserID: Number(myUserID), theirID: Number(theirID), followID: Number(followID), whereTab: whereTab },
+        data: { myUserID: Number(myUserID), theirID: Number(theirID), followID: Number(followID) },
         success: function (data) {
+            if (data == true) {
                 //Neu la o tab Dang Theo doi
-                if (whereTab == 'following') {
                     if ($('#followingBtn_' + followID).attr('class') == 'btnFollowing') {
                         $('#followingBtn_' + followID).attr('class', 'btnFollow');
                         $('#followingBtn_' + followID).html('<span>Theo dõi</span>');
@@ -54,9 +54,28 @@ function ReverseFollowState(myUserID, theirID, followID, whereTab) {
                         $('#followingBtn_' + followID).attr('class', 'btnFollowing');
                         $('#followingBtn_' + followID).html('<span>Đang theo dõi</span>');
                     }
-                }
-                //Neu o tab Nguoi theo doi
-                else if (whereTab == 'followed') {
+            }
+            else {
+
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //some errror, some show err msg to user and log the error
+            alert(xhr.responseText);
+        }
+    });
+}
+
+
+
+function ReverseFollowedState(myUserID, theirID, followID) {
+    $.ajax({
+        url: '/Follow/ReverseFollowedState',
+        type: 'GET',
+        dataType: 'json',
+        data: { myUserID: Number(myUserID), theirID: Number(theirID), followID: Number(followID) },
+        success: function (data) {
+            if (data == true) {
                     if ($('#followedBtn_' + followID).attr('class') == 'btnFollow') {
                         $('#followedBtn_' + followID).attr('class', 'btnFollowed');
                         $('#followedBtn_' + followID).html('<span>Đang theo dõi</span>');
@@ -65,7 +84,10 @@ function ReverseFollowState(myUserID, theirID, followID, whereTab) {
                         $('#followedBtn_' + followID).attr('class', 'btnFollow');
                         $('#followedBtn_' + followID).html('<span>Theo dõi</span>');
                     }
-                }
+            }
+            else {
+
+            }
         },
         error: function (xhr, ajaxOptions, thrownError) {
             //some errror, some show err msg to user and log the error

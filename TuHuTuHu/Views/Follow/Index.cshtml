@@ -56,7 +56,7 @@
                         <img src=@_following.Account1.AvtLink class="avtUserFl">
                         <a class="userNameFl" href=@("/Userpage/Index/"+_following.UserID)>@_following.Account1.Fullname</a>
                         <a class="userIDFl" href=@("/Userpage/Index/"+_following.UserID)>@("@"+_following.Account1.Username)</a>
-                        <button class="btnFollowing" id=@("followingBtn_"+_following.FollowID) onclick="ReverseFollowState(@Model.account.AccID, @_following.UserID, @_following.FollowID, 'following')">
+                        <button class="btnFollowing" id=@("followingBtn_"+_following.FollowID) onclick="ReverseFollowingState(@Model.account.AccID, @_following.UserID, @_following.FollowID)">
                         <span>Đang theo dõi</span>
                         </button>
                     </div>
@@ -70,7 +70,7 @@
                         <img src=@_followed.Account.AvtLink class="contactavt">
                         <a class="userNameFl" href=@("/Userpage/Index/"+_followed.FollowerID)>@_followed.Account.Fullname</a>
                         <a class="userIDFl" href=@("/Userpage/Index/"+_followed.FollowerID)>@("@"+_followed.Account.Username)</a>
-                        <button class="btnFollow" id=@("followedBtn_"+_followed.FollowID.ToString()) onclick="ReverseFollowState(@Model.account.AccID, @_followed.FollowerID, @_followed.FollowID, 'followed') "><span>Theo dõi</span></button>
+                        <button class="btnFollow" id=@("followedBtn_"+_followed.FollowID.ToString()) onclick="ReverseFollowedState(@Model.account.AccID, @_followed.FollowerID, @_followed.FollowID) "><span>Theo dõi</span></button>
                     </div>
                 }
             </div>
