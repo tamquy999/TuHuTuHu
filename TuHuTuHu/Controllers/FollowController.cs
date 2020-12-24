@@ -83,7 +83,37 @@ namespace TuHuTuHu.Controllers
             }
         }
 
+        public ActionResult ReverseFollowedState(int myUserID, int theirID, int followID)
+        {
+            acc = base.db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
 
+            if (acc.AccID == myUserID)
+            {
+                List<Follow> thisFollowRow = base.db.Follow.Where(s => s.UserID == theirID && s.FollowerID == myUserID).ToList();
 
+                if (thisFollowRow.Count == 0)
+                {
+                    Follow temp = new Follow();
+                    temp.UserID = theirID;
+                    temp.FollowerID = myUserID;
+                    base.db.Follow.Add(temp);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    foreach (var temp in thisFollowRow)
+                    {
+                        base.db.Follow.Remove(temp);
+                        db.SaveChanges();
+                    }
+                }
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
