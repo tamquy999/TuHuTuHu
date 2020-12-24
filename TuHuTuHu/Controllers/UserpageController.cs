@@ -10,7 +10,6 @@ namespace TuHuTuHu.Controllers
     [Authorize]
     public class UserpageController : BaseController
     {
-
         // GET: Userpage
         public ActionResult Index(int id)
         {
@@ -18,6 +17,9 @@ namespace TuHuTuHu.Controllers
 
             ViewBag.CurrentUser = acc;
             ViewBag.Contacts = GetAllContact();
+            ViewBag.FollowedTheir = CheckMeFollowFriendReturnFolowID(acc,id);
+
+            (ViewBag.countFollower, ViewBag.countFollowed) = CountFollow(id);
 
             Userpage userpage = new Userpage();
 
@@ -61,5 +63,58 @@ namespace TuHuTuHu.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
+        public int CheckMeFollowFriendReturnFolowID(Account myAcc,int id)
+        {
+            List<Follow> temp = db.Follow.Where(s => s.FollowerID == myAcc.AccID && s.UserID == id).ToList();
+
+            if(temp.Count != 0)
+            {
+                return temp[0].FollowID; //da follow ngta roi
+            }
+            else
+                return -1; //chua follow ngta
+        }
+
+        Tuple<int,int> CountFollow(int id)
+        {
+            acc = db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+            int countFollower = db.Follow.Count(s => s.UserID == id);
+            int countFollowed = db.Follow.Count(s => s.FollowerID == id);
+            return Tuple.Create(countFollower, countFollowed);
+        }
+
+        [HttpGet]
+        public ActionResult ReverseFollowingStateUserPage(int myUserID, int theirID, int followID)
+        {
+            acc = base.db.Account.Where(s => s.Username == User.Identity.Name).FirstOrDefault();
+
+            if (acc.AccID == myUserID)
+            {
+                List<Follow> thisFollowRow = base.db.Follow.Where(s => s.FollowerID == myUserID && s.UserID == theirID).ToList();
+
+                if (thisFollowRow.Count == 0)
+                {
+                    Follow temp = new Follow();
+                    temp.UserID = theirID;
+                    temp.FollowerID = myUserID;
+                    base.db.Follow.Add(temp);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    foreach (var temp in thisFollowRow)
+                    {
+                        base.db.Follow.Remove(temp);
+                        db.SaveChanges();
+                    }
+                }
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
