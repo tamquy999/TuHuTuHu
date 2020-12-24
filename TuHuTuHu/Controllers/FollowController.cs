@@ -48,5 +48,12 @@ namespace TuHuTuHu.Controllers
             List<Account> contacts = dbContext.Account.Where(s => contactIDs.Contains(s.AccID.ToString())).ToList();
             return contacts;
         }
+
+        [HttpGet]
+        public ActionResult ReverseFollowState(int myUserID, int theirID, int followID, string whereTab)
+        {
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

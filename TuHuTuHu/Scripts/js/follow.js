@@ -34,5 +34,42 @@ function openFollowContent(event, nameOfContent) {
     document.getElementById(nameOfContent).style.display = "block";
     event.currentTarget.className += " active";
 
-    console.log(nameOfContent);
+}
+
+
+function ReverseFollowState(myUserID, theirID, followID, whereTab) {
+    $.ajax({
+        url: '/Follow/ReverseFollowState',
+        type: 'GET',
+        dataType: 'json',
+        data: { myUserID: Number(myUserID), theirID: Number(theirID), followID: Number(followID), whereTab: whereTab },
+        success: function (data) {
+                //Neu la o tab Dang Theo doi
+                if (whereTab == 'following') {
+                    if ($('#followingBtn_' + followID).attr('class') == 'btnFollowing') {
+                        $('#followingBtn_' + followID).attr('class', 'btnFollow');
+                        $('#followingBtn_' + followID).html('<span>Theo dõi</span>');
+                    }
+                    else if ($('#followingBtn_' + followID).attr('class') == 'btnFollow') {
+                        $('#followingBtn_' + followID).attr('class', 'btnFollowing');
+                        $('#followingBtn_' + followID).html('<span>Đang theo dõi</span>');
+                    }
+                }
+                //Neu o tab Nguoi theo doi
+                else if (whereTab == 'followed') {
+                    if ($('#followedBtn_' + followID).attr('class') == 'btnFollow') {
+                        $('#followedBtn_' + followID).attr('class', 'btnFollowed');
+                        $('#followedBtn_' + followID).html('<span>Đang theo dõi</span>');
+                    }
+                    else if ($('#followedBtn_' + followID).attr('class') == 'btnFollowed') {
+                        $('#followedBtn_' + followID).attr('class', 'btnFollow');
+                        $('#followedBtn_' + followID).html('<span>Theo dõi</span>');
+                    }
+                }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //some errror, some show err msg to user and log the error
+            alert(xhr.responseText);
+        }
+    });
 }
