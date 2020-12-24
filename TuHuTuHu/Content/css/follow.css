@@ -198,6 +198,7 @@
     color: white;
     outline: none;
     font-weight: normal;
+    content: "Đang theo dõi";
 }
 
 .btnFollowing:hover span {
