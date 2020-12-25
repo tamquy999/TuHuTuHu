@@ -26,6 +26,7 @@ namespace TuHuTuHu.Controllers
 
             userpage.account = db.Account.Find(id);
             userpage.posts = db.Post.Where(s => s.UserID == id).ToList();
+            userpage.posts.Reverse();
 
             return View(userpage);
         }
